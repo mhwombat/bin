@@ -1,0 +1,9 @@
+#!/bin/sh
+echo "% Created by Amy's make-bib at "`date`
+for file in `find ~/néal/taighde/docs -name '*.bib'`
+do
+	>&2 echo Processing $file
+        tag=$(basename "$file")
+        tag=${tag%.*}
+        sed "s/XXX_SEE_FILENAME_XXX/${tag}/" $file
+done

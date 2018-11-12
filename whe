@@ -1,0 +1,21 @@
+#!/bin/sh
+#wombat dir
+
+dir=`pwd | sed 's@.*/@@'`
+files=`ls *.yaml ChangeLog.md`
+
+files="${files} `find app* -name '*.hs' -or -name '*.lhs' | sort`"
+
+if [ -d "src" ]; then
+  files="${files} `find src -name '*.hs' -or -name '*.lhs' | sort`"
+fi
+
+if [ -d "test" ]; then
+  files="${files} `find test -name '*.hs' -or -name '*.lhs' | sort`"
+fi
+
+#gedit ${files} &
+#cream ${files} &
+#gvim ${files} &
+emacs --title "${dir} : emacs" ${files} &
+

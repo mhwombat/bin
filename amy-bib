@@ -1,0 +1,7 @@
+#!/bin/sh
+read -p "Select BibTeX snippet. Press ENTER to proceed." tag
+file="$(mktemp)"
+xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' > $file
+echo $file
+read -p "Tag? " tag
+mv -i $file ~/néal/taighde/docs/${tag}.bib

@@ -1,0 +1,4 @@
+#!/bin/sh
+# head-tail n k returns the first n rows and the last k rows
+(sed -u ${1}q;tail -n ${2})
+
