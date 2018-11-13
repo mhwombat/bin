@@ -1,9 +1,9 @@
 #!/bin/sh
 
-for file in `find . -regextype posix-egrep -regex '.*\.hs|.*\.cabal|LICENSE' | grep -v '^./dist' | grep -v -e '/Setup.hs'`
+for file in `find . -regextype posix-egrep -regex '.*\.hs|.*\.cabal|LICENSE' | grep -v '^./.stack-work' | grep -v -e '/Setup.hs'`
 do
 	echo Editing $file
-	sed 's/\((c) Amy de Buitléir 20..\)$/\1-2018/; s/-20../-2018/' $file > $file.backup
+	sed 's/(c) Amy de Buitléir \(20..\)$/(c) Amy de Buitléir \1-2018/; s/-20../-2018/' $file > $file.backup
 	diff $file $file.backup
 	result=$?
 	if [ $result -gt 0 ] ; then 

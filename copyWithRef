@@ -1,0 +1,13 @@
+#!/bin/sh
+windowID=`xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}'`
+windowTitle=`xprop -id ${windowID} | grep _NET_WM_NAME | sed 's/.* = //'`
+buffer=`xsel -o`
+
+sTag='<<<'
+bTag='>>>'
+
+xsel --input <<EOF
+${sTag} begin copy from ${windowTitle} ${bTag}
+${buffer}
+${sTag} end copy from ${windowTitle} ${bTag}
+EOF
