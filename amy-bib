@@ -1,4 +1,8 @@
 #!/bin/sh
+#: Copy BibTeX information and put it into my citation management system.
+#: I keep each BibTeX in a separate file.
+#: The name of the file is the BibTeX key.
+
 read -p "Select BibTeX snippet. Press ENTER to proceed." tag
 file="$(mktemp)"
 xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' > $file

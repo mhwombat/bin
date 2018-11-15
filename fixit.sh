@@ -1,4 +1,6 @@
 #!/bin/sh
+#: A template for making a change to a group of files,
+#: previewing each change before it is made.
 
 force=
 #bflag=

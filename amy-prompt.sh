@@ -1,4 +1,5 @@
 #!/bin/bash
+#: Set the colour of the bash prompt according to the current directory.
 set_fg() {
     red=$1
     green=$2

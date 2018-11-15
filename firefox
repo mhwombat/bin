@@ -1,2 +1,3 @@
 #!/bin/sh
+#: Simple wrapper to invoke Firefox.
 ~/src/firefox/firefox

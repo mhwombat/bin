@@ -1,6 +1,8 @@
 #!/bin/sh
+#: Update the copyright date for all Haskell files in the current Stack project.
+#: You will see a preview of all changes before they are made.
 
-for file in `find . -regextype posix-egrep -regex '.*\.hs|.*\.cabal|LICENSE' | grep -v '^./.stack-work' | grep -v -e '/Setup.hs'`
+for file in `find . -regextype posix-egrep -regex '.*\.hs|package.yaml|LICENSE' | grep -v '^./.stack-work' | grep -v -e '/Setup.hs'`
 do
 	echo Editing $file
 	sed 's/(c) Amy de Buitléir \(20..\)$/(c) Amy de Buitléir \1-2018/; s/-20../-2018/' $file > $file.backup

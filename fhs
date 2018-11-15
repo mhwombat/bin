@@ -1,5 +1,5 @@
 #!/bin/sh
-# Find Haskell source files
+#: Find all Haskell source files in the current Stack project.
 dir=$1
 if [ -z ${dir} ]; then
   dir='.'

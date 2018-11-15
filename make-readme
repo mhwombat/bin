@@ -1,0 +1,19 @@
+#!/bin/sh
+#: Creates this file (README.md).
+
+echo '# bin'
+echo ''
+echo 'Useful scripts.'
+echo ''
+
+for file in `find . -name LICENSE -prune \
+                 -o -name README.md -prune \
+		 -o -name '.git*' -prune \
+		 -o -name '*~' -prune \
+		 -o -type f -print \
+		 | sort`
+do
+  echo "$file" | sed 's_.*/__; s/^/# /'
+  grep '#: ' $file | sed 's/^#: //'
+  echo ''
+done

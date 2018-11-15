@@ -1,2 +1,3 @@
 #!/bin/sh
+#: Search Haskell files for a string.
 fhs "$2" | xargs grep "$1"

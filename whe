@@ -1,5 +1,7 @@
 #!/bin/sh
-#wombat dir
+#: A quick script to load all of the Haskell source files
+#: and configuration files in the current Stack project
+#: into emacs.
 
 dir=`pwd | sed 's@.*/@@'`
 files=`ls *.yaml ChangeLog.md`

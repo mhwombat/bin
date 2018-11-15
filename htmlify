@@ -1,2 +1,3 @@
 #!/bin/sh
+#: Replaces all line endings with HTML <br/> tags.
 sed 's@$@<br/>@' -

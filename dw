@@ -1,4 +1,17 @@
 #!/bin/bash
+#: Sets up, verifies, and maintains links for dotfiles.
+#: For each file listed in ${CONFIG_FILE}, this script will:
+#:
+#: 1. If the file does not exist, link it to the corresponding file in ${DOTFILE_DIR}.
+#: 2. If the file exists and is not a link, move it to ${DOTFILE_DIR}
+#:    and replace it with a symbolic link.
+#: 3. If the file exists and is a link, make sure it's linked to the corresponding file
+#:    in ${DOTFILE_DIR}.
+#: 
+#: This script is idempotent, so you can use it to
+#: set up links for the first time on a new machine,
+#: put additional files under dotfile management (add them to ${CONFIG_FILE} first),
+#: or simply verify that existing links are correct.
 
 DOTFILE_DIR=~/dotWombat
 CONFIG_FILE=${DOTFILE_DIR}/config

@@ -1,4 +1,5 @@
 #!/bin/bash
+#: Select snippets of text (including code) and paste them wherever.
 #
 # Based on "snippy" by "sessy" 
 # (https://bbs.archlinux.org/viewtopic.php?id=71938)
