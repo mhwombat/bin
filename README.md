@@ -42,6 +42,8 @@ A template for making a change to a group of files,
 previewing each change before it is made.
 
 ## head-tail
+`head-tail n k` returns the first n rows and the last k rows.
+Useful, for example, when you want the header of a file plus the ending.
 
 ## htmlify
 Replaces all line endings with HTML <br/> tags.
