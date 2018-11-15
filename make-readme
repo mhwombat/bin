@@ -13,7 +13,7 @@ for file in `find . -name LICENSE -prune \
 		 -o -type f -print \
 		 | sort`
 do
-  echo "$file" | sed 's_.*/__; s/^/# /'
+  echo "$file" | sed 's_.*/__; s/^/## /'
   grep '#: ' $file | sed 's/^#: //'
   echo ''
 done
