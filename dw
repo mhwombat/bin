@@ -20,35 +20,54 @@ function targetPath {
   echo ${DOTFILE_DIR}/$1
 }
 
+function moveAndLink {
+  echo "Moving $1 to $2 and creating link"
+  TARGET_DIR=$(dirname "$2")
+  if [ -d "${TARGET_DIR}" ]; then
+    : # Directory already exists, nothing to do
+  else
+    # echo "Creating directory ${TARGET_DIR}"
+    mkdir -p ${TARGET_DIR}
+  fi
+  mv $1 $2
+  ln -s $2 $1
+}
+
+function createLink {
+  if [ -e $2 ]; then
+    echo "Creating link from $1 to $2"
+    ln -s $2 $1
+  else
+    echo "ERROR: $2 does not exist"
+  fi
+}
+
+function verifyLink {
+  if [ -e $2 ]; then
+    TARGET=`readlink $1`
+    if [ "${TARGET}" = "$2" ]; then
+      echo "$1 is properly linked"
+    else
+      echo "ERROR: $1 links to ${TARGET} instead of $2"
+    fi
+  else
+    echo "$1 is a symbolic link, but $2 does not exist"
+  fi
+}
+
 function setupLink {
   if [ -e $1 ]; then
     if [ -h $1 ]; then
-      if [ -e $2 ]; then
-        TARGET=`readlink $1`
-	if [ "${TARGET}" = "$2" ]; then
-	  echo "$1 is properly linked"
-	else
-	  echo "ERROR: $1 links to ${TARGET} instead of $2"
-	fi
-      else
-        echo "$1 is a symbolic link, but $2 does not exist"
-      fi
+      verifyLink $1 $2
     else
       if [ -e $2 ]; then
         echo "ERROR: $2 exists, but $1 is not a symbolic link"
       else
-        echo "Moving $1 to $2 and creating link"
-        mv $1 $2
-        ln -s $2 $1
+        moveAndLink $1 $2
       fi
     fi
   else
-    if [ -e $2 ]; then
-      echo "Creating link from $1 to $2"
-      ln -s $2 $1
-    else
-      echo "ERROR: $2 does not exist"
-    fi
+    createLink $1 $2
   fi
 }
 
