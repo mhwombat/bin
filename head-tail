@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #: `head-tail n k` returns the first n rows and the last k rows.
 #: Useful, for example, when you want the header of a file plus the ending.
 (sed -u ${1}q;tail -n ${2})

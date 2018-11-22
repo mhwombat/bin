@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #: Read all BibTeX entries from my citation management system,
 #: creating a single BibTex file.
 echo "% Created by Amy's make-bib at "`date`

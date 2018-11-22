@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #: Copy BibTeX information and put it into my citation management system.
 #: I keep each BibTeX in a separate file.
 #: The name of the file is the BibTeX key.

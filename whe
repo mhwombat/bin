@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #: A quick script to load all of the Haskell source files
 #: and configuration files in the current Stack project
 #: into emacs.

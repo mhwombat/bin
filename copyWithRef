@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #: Copies text wih some info about where it came from.
 windowID=`xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}'`
 windowTitle=`xprop -id ${windowID} | grep _NET_WM_NAME | sed 's/.* = //'`

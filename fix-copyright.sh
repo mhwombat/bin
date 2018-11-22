@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #: Update the copyright date for all Haskell files in the current Stack project.
 #: You will see a preview of all changes before they are made.
 

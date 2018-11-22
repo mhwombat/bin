@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #: Select snippets of text (including code) and paste them wherever.
 #
 # Based on "snippy" by "sessy" 
