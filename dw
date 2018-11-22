@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #: Sets up, verifies, and maintains links for dotfiles.
 #: For each file listed in ${CONFIG_FILE}, this script will:
 #:
