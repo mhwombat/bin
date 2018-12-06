@@ -25,18 +25,28 @@ function linkPath {
 }
 
 function targetPath {
-  echo ${DOTFILE_DIR}/$1
+  if [[ "$1" =~ ^/.* ]]; then
+    # echo "DEBUG $1 is an absolute path"
+    echo ${DOTFILE_DIR}$1    # Don't add a second /
+  else
+    # echo "DEBUG $1 is a relative path"
+    echo ${DOTFILE_DIR}/$1
+  fi
+}
+
+function makeDirFor {
+  DIR=$(dirname "$1")
+  if [ -d "${DIR}" ]; then
+    : # Directory already exists, nothing to do
+  else
+    echo "Creating directory ${DIR}"
+    mkdir -p ${DIR}
+  fi
 }
 
 function moveAndLink {
   echo "Moving $1 to $2 and creating link"
-  TARGET_DIR=$(dirname "$2")
-  if [ -d "${TARGET_DIR}" ]; then
-    : # Directory already exists, nothing to do
-  else
-    # echo "Creating directory ${TARGET_DIR}"
-    mkdir -p ${TARGET_DIR}
-  fi
+  makeDirFor $2
   if [[ "$1" =~ /.* ]]; then
     sudo mv $1 $2 && sudo ln -s $2 $1
   else
@@ -47,6 +57,7 @@ function moveAndLink {
 function createLink {
   if [ -e "$2" ]; then
     echo "Creating link from $1 to $2"
+    makeDirFor $1
     ln -s $2 $1
   else
     echo "ERROR: $2 does not exist"
@@ -92,6 +103,6 @@ while read DOTFILE
     # echo "Processing ${DOTFILE}"
     LINK_NAME=`linkPath ${DOTFILE}`
     TARGET=`targetPath ${DOTFILE}`
-    #echo "DEBUG LINK_NAME=${LINK_NAME} TARGET=${TARGET}"
+    # echo "DEBUG LINK_NAME=${LINK_NAME} TARGET=${TARGET}"
     setupLink ${LINK_NAME} ${TARGET}
   done < "${CONFIG_FILE}"
