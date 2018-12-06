@@ -16,6 +16,14 @@
 DOTFILE_DIR=~/dotWombat
 CONFIG_FILE=${DOTFILE_DIR}/config
 
+function linkPath {
+  if [[ "$1" =~ /.* ]]; then
+    echo $1
+  else
+    echo ~/$1
+  fi
+}
+
 function targetPath {
   echo ${DOTFILE_DIR}/$1
 }
@@ -29,12 +37,15 @@ function moveAndLink {
     # echo "Creating directory ${TARGET_DIR}"
     mkdir -p ${TARGET_DIR}
   fi
-  mv $1 $2
-  ln -s $2 $1
+  if [[ "$1" =~ /.* ]]; then
+    sudo mv $1 $2 && sudo ln -s $2 $1
+  else
+    mv $1 $2 && ln -s $2 $1
+  fi
 }
 
 function createLink {
-  if [ -e $2 ]; then
+  if [ -e "$2" ]; then
     echo "Creating link from $1 to $2"
     ln -s $2 $1
   else
@@ -43,7 +54,7 @@ function createLink {
 }
 
 function verifyLink {
-  if [ -e $2 ]; then
+  if [ -e "$2" ]; then
     TARGET=`readlink $1`
     if [ "${TARGET}" = "$2" ]; then
       echo "$1 is properly linked"
@@ -56,17 +67,22 @@ function verifyLink {
 }
 
 function setupLink {
-  if [ -e $1 ]; then
-    if [ -h $1 ]; then
+  if [ -e "$1" ]; then
+    #echo "DEBUG $1 exists"
+    if [ -h "$1" ]; then
+      #echo "DEBUG $1 is a link"
       verifyLink $1 $2
     else
+      #echo "DEBUG $1 is not a link"
       if [ -e $2 ]; then
         echo "ERROR: $2 exists, but $1 is not a symbolic link"
       else
+        #echo "DEBUG $2 exists"
         moveAndLink $1 $2
       fi
     fi
   else
+    #echo "DEBUG $1 does not exist"
     createLink $1 $2
   fi
 }
@@ -74,7 +90,8 @@ function setupLink {
 while read DOTFILE
   do
     # echo "Processing ${DOTFILE}"
-    LINK_NAME=~/${DOTFILE}
+    LINK_NAME=`linkPath ${DOTFILE}`
     TARGET=`targetPath ${DOTFILE}`
+    #echo "DEBUG LINK_NAME=${LINK_NAME} TARGET=${TARGET}"
     setupLink ${LINK_NAME} ${TARGET}
   done < "${CONFIG_FILE}"
