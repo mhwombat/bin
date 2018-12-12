@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-#: Simple wrapper to invoke Firefox.
-~/src/firefox/firefox
