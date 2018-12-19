@@ -35,6 +35,10 @@ set_prompt() {
     bg=$(set_bg $dir_colour)
     user_host="\\\\u@\\\\h" # username + '@' + the hostname up to the first `.'
     dir="\\\\w" # the current working directory
+
+    if [ -n "$IN_NIX_SHELL" ]; then
+      dir="${dir} (nix-shell)"
+    fi
     prompt="\\\\$" # if the effective UID is 0, a #, otherwise a $
     PS1="$(printf "${fg}${bg}${user_host}:${dir} ${prompt}${reset_colours}") "
 }
