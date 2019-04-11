@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 #: A quick script to load all of the Haskell source files
-#: and configuration files in the current Stack project
+#: and configuration files in the current project
 #: into emacs.
 
 dir=`pwd | sed 's@.*/@@'`
-files=`ls *.yaml ChangeLog.md`
+files=`ls *.cabal ChangeLog.md`
 
 files="${files} `find app* -name '*.hs' -or -name '*.lhs' | sort`"
 
