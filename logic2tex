@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+#: Convert a logic sentence using unicode characters to Tex (LaTeX)
+sed '
+# s/^/\\[ /
+# s/$/ \\]/
+s/ *∧ */ \\land /g
+s/ *∨ */ \\lor /g
+s/ *¬ */ \\lnot /g
+s/ *⇒ */ \\implies /g
+s/ *⇔ */ \\iff /g
+s/ *⊨ */ \\lentails /g
+s/ *⊭ */ \\lnotentails /g
+#s/ *??? */ \\proves /g
+s/ *∪ */ \\sunion /g
+s/ *∪ */ \\sintersection /g
+s/{/\\left\\{ /g
+s/ *}/ \\right\\}/g
+s/ *| */ \\mid /g
+s/∀/\\forall /g
+s/∃/\\exists /g
+s/𝛼/\\alpha /g
+s/α/\\alpha /g
+s/𝛽/\\beta /g
+s/β/\\beta /g
+s/𝛾/\\gamma /g
+s/γ/\\gamma /g
+s/Γ/\\Gamma /g
+s/𝛿/\\delta /g
+s/δ/\\delta /g
+s/Δ/\\Delta /g
+s/𝜖/\\epsilon /g
+s/𝜀/\\varepsilon /g
+s/ε/\\varepsilon /g
+s/𝜁/\\zeta /g
+s/ζ/\\zeta /g
+s/𝜂/\\eta /g
+s/η/\\eta /g
+s/𝜃/\\theta /g
+s/θ/\\theta /g
+s/𝜗/\\vartheta /g
+s/θ/\\vartheta /g
+s/Θ/\\Theta /g
+s/𝜄/\\iota /g
+s/ι/\\iota /g
+s/𝜅/\\kappa /g
+s/κ/\\kappa /g
+s/𝜆/\\lambda /g
+s/λ/\\lambda /g
+s/Λ/\\Lambda /g
+s/𝜇/\\mu /g
+s/μ/\\mu /g
+s/𝜈/\\nu /g
+s/ν/\\nu /g
+s/𝜉/\\xi /g
+s/ξ/\\xi /g
+s/Ξ/\\Xi /g
+s/𝑜/\/o/g
+s/𝜋/\\pi /g
+s/π/\\pi /g
+s/𝜛/\\varpi /g
+s/Π/\\Pi /g
+s/𝜌/\\rho /g
+s/ρ/\\rho /g
+s/𝜚/\\varrho /g
+s/𝜎/\\sigma /g
+s/σ/\\sigma /g
+s/𝜍/\\varsigma /g
+s/ς/\\varsigma /g
+s/Σ/\\Sigma /g
+s/𝜏/\\tau /g
+s/τ/\\tau /g
+s/𝜐/\\upsilon /g
+s/υ/\\upsilon /g
+s/Υ/\\Upsilon /g
+s/𝜑/\\phi g/
+s/Φ/\\Phi /g
+s/𝜙/\\varphi /g
+s/φ/\\varphi /g
+s/𝜒/\\chi /g
+s/χ/\\chi /g
+s/𝜓/\\psi /g
+s/ψ/\\psi /g
+s/Ψ/\\Psi /g
+s/𝜔/\\omega /g
+s/ω/\\omega /g
+s/Ω/\\Omega /g
+'
