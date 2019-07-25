@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 #: Set the colour of the bash prompt according to the current directory.
+#: The colour is chosen based on a checksum of the filepath.
+#: The algorithm usually results in a visually distinct colour for each path.
+#: To use this script, put the following line in your shell configuration file
+#: (e.g., .bashrc).
+#: ```
+#: source amy-prompt.sh
+#: ```
 set_fg() {
     red=$1
     green=$2
