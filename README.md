@@ -41,7 +41,8 @@ previewing each change before it is made.
 
 ## git-summary
 git-summary - summarize git repos at some path
-Forked from https://github.com/lordadamson/git-summary
+Ex: `git-summary ~`
+Forked from https://github.com/lordadamson/git-summary.
 Freely distributed under the MIT license. 2018@MirkoLedda
 
 ## head-tail
