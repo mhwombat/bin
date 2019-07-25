@@ -1,6 +1,7 @@
 # bin
 
-Useful scripts.
+A collection of useful scripts.
+Each script is summarised below.
 
 ## amy-bib
 Copy BibTeX information and put it into my citation management system.
@@ -30,9 +31,6 @@ or simply verify that existing links are correct.
 ## fhs
 Find all Haskell source files in the current Stack project.
 
-## firefox
-Simple wrapper to invoke Firefox.
-
 ## fix-copyright.sh
 Update the copyright date for all Haskell files in the current Stack project.
 You will see a preview of all changes before they are made.
@@ -41,6 +39,8 @@ You will see a preview of all changes before they are made.
 A template for making a change to a group of files,
 previewing each change before it is made.
 
+## git-summary
+
 ## head-tail
 `head-tail n k` returns the first n rows and the last k rows.
 Useful, for example, when you want the header of a file plus the ending.
@@ -48,7 +48,8 @@ Useful, for example, when you want the header of a file plus the ending.
 ## htmlify
 Replaces all line endings with HTML <br/> tags.
 
-## jot
+## logic2tex
+Convert a logic sentence using unicode characters to Tex (LaTeX)
 
 ## make-bib
 Read all BibTeX entries from my citation management system,
@@ -56,7 +57,6 @@ creating a single BibTex file.
 
 ## make-readme
 Creates this file (README.md).
-  grep '#: ' $file | sed 's/^#: //'
 
 ## searchHaskell
 Search Haskell files for a string.
@@ -66,6 +66,6 @@ Select snippets of text (including code) and paste them wherever.
 
 ## whe
 A quick script to load all of the Haskell source files
-and configuration files in the current Stack project
+and configuration files in the current project
 into emacs.
 

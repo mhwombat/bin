@@ -3,7 +3,8 @@
 
 echo '# bin'
 echo ''
-echo 'Useful scripts.'
+echo 'A collection of useful scripts.'
+echo 'Each script is summarised below.'
 echo ''
 
 for file in `find . -name LICENSE -prune \
@@ -14,6 +15,6 @@ for file in `find . -name LICENSE -prune \
 		 | sort`
 do
   echo "$file" | sed 's_.*/__; s/^/## /'
-  grep '#: ' $file | sed 's/^#: //'
+  grep '^#: ' $file | sed 's/^#: //'
   echo ''
 done
