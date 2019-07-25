@@ -12,7 +12,7 @@ The name of the file is the BibTeX key.
 Set the colour of the bash prompt according to the current directory.
 
 ## copyWithRef
-Copies text wih some info about where it came from.
+Copies text with some info about where it came from.
 
 ## dw
 Sets up, verifies, and maintains links for dotfiles.
@@ -40,13 +40,16 @@ A template for making a change to a group of files,
 previewing each change before it is made.
 
 ## git-summary
+git-summary - summarize git repos at some path
+Forked from https://github.com/lordadamson/git-summary
+Freely distributed under the MIT license. 2018@MirkoLedda
 
 ## head-tail
 `head-tail n k` returns the first n rows and the last k rows.
 Useful, for example, when you want the header of a file plus the ending.
 
 ## htmlify
-Replaces all line endings with HTML <br/> tags.
+Replaces all line endings with HTML break tags.
 
 ## logic2tex
 Convert a logic sentence using unicode characters to Tex (LaTeX)
