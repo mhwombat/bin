@@ -3,19 +3,26 @@
 sed '
 # s/^/\\[ /
 # s/$/ \\]/
-s/ *∧ */ \\land /g
-s/ *∨ */ \\lor /g
-s/ *¬ */ \\lnot /g
-s/ *⇒ */ \\implies /g
-s/ *⇔ */ \\iff /g
-s/ *⊨ */ \\lentails /g
-s/ *⊭ */ \\lnotentails /g
-#s/ *??? */ \\proves /g
-s/ *∪ */ \\sunion /g
-s/ *∪ */ \\sintersection /g
+s/∧/ \\land /g
+#s/&/ \\land /g
+s/∨/ \\lor /g
+#s/|/ \\lor /g
+s/¬/ \\lnot /g
+#s/~/ \\lnot /g
+s/⇒/ \\implies /g
+#s/→/ \\implies /g
+s/=>/ \\implies /g
+s/⇔/ \\iff /g
+#s/↔/ \\iff /g
+s/⊨/ \\lentails /g
+#s/⊢/ \\lentails /g
+s/⊭/ \\lnotentails /g
+#s/???/ \\proves /g
+s/∪/ \\sunion /g
+s/∪/ \\sintersection /g
 s/{/\\left\\{ /g
-s/ *}/ \\right\\}/g
-s/ *| */ \\mid /g
+s/}/ \\right\\}/g
+s/|/ \\mid /g
 s/∀/\\forall /g
 s/∃/\\exists /g
 s/𝛼/\\alpha /g
@@ -84,4 +91,5 @@ s/Ψ/\\Psi /g
 s/𝜔/\\omega /g
 s/ω/\\omega /g
 s/Ω/\\Omega /g
+s/  */ /g
 '
