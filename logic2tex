@@ -18,6 +18,7 @@ s/⊨/ \\lentails /g
 #s/⊢/ \\lentails /g
 s/⊭/ \\lnotentails /g
 #s/???/ \\proves /g
+s/←/ \\leftarrow /g
 s/∪/ \\sunion /g
 s/∪/ \\sintersection /g
 s/{/\\left\\{ /g
