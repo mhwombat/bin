@@ -21,6 +21,7 @@ s/⊭/ \\lnotentails /g
 s/←/ \\leftarrow /g
 s/∪/ \\sunion /g
 s/∪/ \\sintersection /g
+s/∈/ \\in /g
 s/{/\\left\\{ /g
 s/}/ \\right\\}/g
 s/|/ \\mid /g
