@@ -22,6 +22,7 @@ s/←/ \\leftarrow /g
 s/∪/ \\sunion /g
 s/∪/ \\sintersection /g
 s/∈/ \\in /g
+s/⊆/ \\subseteq /g
 s/{/\\left\\{ /g
 s/}/ \\right\\}/g
 s/|/ \\mid /g
