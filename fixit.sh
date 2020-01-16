@@ -35,8 +35,11 @@ do
 		if [ ! -z "$force" ]; then
 		    answer="y"
 		else
-		    read -p "ok (y/n) " answer
+		    read -p "ok (y/n/A) " answer
 		    echo "answer=" $answer
+		    if [ "$answer" = "A" ] ; then
+			force=1
+		    fi
 		fi
 		if [ "$answer" = "y" ] ; then 
 			cp $file.backup $file
