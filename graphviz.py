@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
-
-"""
-Pandoc filter to process code blocks with class "graphviz" into
-graphviz-generated images.
-
-Needs pygraphviz
-"""
+#: Pandoc filter to process code blocks with class "graphviz" into
+#: graphviz-generated images.
+#: Needs pygraphviz.
 
 import os
 import sys
