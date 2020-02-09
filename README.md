@@ -39,7 +39,7 @@ or simply verify that existing links are correct.
 Find all Haskell source files in the current Stack project.
 
 ## fix-copyright.sh
-Update the copyright date for all Haskell files in the current Stack project.
+Update the copyright date for all Haskell files in and under the current directory.
 You will see a preview of all changes before they are made.
 
 ## fixit.sh
@@ -53,6 +53,11 @@ Ex: `git-summary ~`
 
 Forked from https://github.com/lordadamson/git-summary.
 Freely distributed under the MIT license. 2018@MirkoLedda
+
+## graphviz.py
+Pandoc filter to process code blocks with class "graphviz" into
+graphviz-generated images.
+Needs pygraphviz.
 
 ## head-tail
 `head-tail n k` returns the first n rows and the last k rows.
@@ -76,6 +81,15 @@ Search Haskell files for a string.
 
 ## snippy
 Select snippets of text (including code) and paste them wherever.
+
+## tex2png.py
+Pandoc filter to convert code blocks with class "tex2png" into
+images.
+Requires tex2png.sh.
+
+## tex2png.sh
+Converts a (La)Tex document to PNG.
+You might use this, for example, if you want to display a short LaTex document as an image within an HTML page.
 
 ## whe
 A quick script to load all of the Haskell source files
