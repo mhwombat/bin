@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-
-"""
-Pandoc filter to convert code blocks with class "tex2png" into
-images.
-"""
+#: Pandoc filter to convert code blocks with class "tex2png" into
+#: images.
+#: Requires tex2png.sh.
 
 import os
 import sys
