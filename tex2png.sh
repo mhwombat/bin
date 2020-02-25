@@ -8,12 +8,13 @@
 #:    tex2png.sh sample.png < sample.tex
 #: ```
 #: 
-#: You will probably want to use the varwidth parameter on documentclass,
-#: and override the default margins.
+#: Your document should use the standalone document class
+#: and set `convert=true`.
+#: You may wish to override the default margins.
 #: Here's a sample minimal LaTeX document that you can use as a starting point.
 #: 
 #: ```
-#:   \documentclass[varwidth,convert,margin=4pt]{standalone}
+#:   \documentclass[convert=true,margin=4pt]{standalone}
 #:   \begin{document}
 #:   \huge
 #:   Hello world!
@@ -28,6 +29,8 @@ TMPDIR=$(mktemp -d "tex2png_XXXXX")
 
 cd ${TMPDIR}
 cat > aaa.tex
+#latex -interaction=nonstopmode -shell-escape aaa >aaa.out
+#cp aaa.png ${OUTFILE}
 pdflatex -interaction=nonstopmode aaa >aaa.out 2>aaa.err
 convert -quiet aaa.pdf ${OUTFILE}
 cd ..
