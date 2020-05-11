@@ -27,7 +27,7 @@
 #      ((mod4Mask, xK_s), spawn "/path/to/snippy")
 #
 #DIR=${HOME}/.snippy
-DIR=${HOME}/néal/snippy
+DIR=${HOME}/github/snippets
 DMENU_ARGS='-b -nf green -nb black -sf yellow -sb black'
 XSEL_ARGS="--clipboard --input"
 
