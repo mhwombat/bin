@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#: Renames a PDF file according to author and title.
+
+INFILE=$(readlink -f "$1")
+TMPFILE=$(mktemp "rename-pdf_XXXXX")
+
+echo "INFILE=${INFILE}"
+echo "TMPFILE=${TMPFILE}"
+
+pdfx "${INFILE}" > ${TMPFILE}
+
+cat ${TMPFILE}
+
+author=$(grep '\- Author' ${TMPFILE} | sed 's/- Author = //')
+title=$(grep '\- Title' ${TMPFILE} | sed 's/- Title = //')
+echo "Author is ${author}"
+echo "Title is ${title}"
+
+escaped_author=$(echo "$author" | sed 's/\([^ ]*\) \(.*\)/\2_\1/; s/ /_/')
+escaped_title=$(echo "$title" | sed 's/ /_/')
+echo "Author is ${escaped_author}"
+echo "Title is ${escaped_title}"
+
+echo "mkdir ${escaped_author}"
+echo git mv '"'${INFILE}'"' ${escaped_author}/${escaped_title}
+echo "-----"
+rm -rf ${TMPFILE}
