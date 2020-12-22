@@ -2,7 +2,7 @@
 #: Read all BibTeX entries from my citation management system,
 #: creating a single BibTex file.
 echo "% Created by Amy's make-bib at "`date`
-for file in `find ~/néal/taighde/docs -name '*.bib'`
+for file in `find ~/github/taighde ~/github/leabhartha -name '*.bib'`
 do
 	>&2 echo Processing $file
         tag=$(basename "$file")
