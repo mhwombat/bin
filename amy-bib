@@ -6,6 +6,11 @@
 read -p "Select BibTeX snippet. Press ENTER to proceed." tag
 file="$(mktemp)"
 xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' > $file
-echo $file
+cat $file
 read -p "Tag? " tag
-mv -i $file ~/néal/taighde/docs/${tag}.bib
+#mv -i $file ~/github/taighde/${tag}.bib
+mv -i $file ./${tag}.bib
+#mv -i $file ${tag}.bib
+
+#isbn=`grep 'isbn =' ${tag}.bib | sed 's/.*{//; s/}.*//'`
+#echo "${tag}__${isbn}.epub"
