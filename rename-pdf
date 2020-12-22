@@ -2,7 +2,7 @@
 #: Renames a PDF file according to author and title.
 
 INFILE=$(readlink -f "$1")
-TMPFILE=$(mktemp "rename-pdf_XXXXX")
+TMPFILE=$(mktemp "rename-pdf_XXXXXX")
 
 echo "INFILE=${INFILE}"
 echo "TMPFILE=${TMPFILE}"
