@@ -5,7 +5,8 @@
 
 read -p "Select BibTeX snippet. Press ENTER to proceed." tag
 file="$(mktemp)"
-xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' > $file
+# xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' > $file
+xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' | bibclean > $file
 cat $file
 read -p "Tag? " tag
 #mv -i $file ~/github/taighde/${tag}.bib

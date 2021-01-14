@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-#: Find all Haskell source files in the current Stack project.
-dir=$1
-if [ -z ${dir} ]; then
-  dir='.'
-fi
-find ${dir} -name .stack-work -prune -o -name '*.hs' -print
-
