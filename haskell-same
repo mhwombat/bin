@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+#: A quick script to find common code between two Haskell files.
+#: 
+#: Usage:
+#: 
+#:   haskell-same FILE1 FILE2
+
+TEMPFILE="$(mktemp)"
+
+# Ignore lines with only whitespace
+# Ignore certain comments
+# Ignore imports
+# Ignore pragmas
+# Ignore very short lines
+
+same --ignore-all-space $1 $2 \
+  | grep -v '^ *$' \
+  | grep -v '^-----' \
+  | grep -v '^-- Copyright' \
+  | grep -v '^-- License' \
+  | grep -v '^-- Maintainer' \
+  | grep -v '^-- Stability' \
+  | grep -v '^-- Portability' \
+  | grep -v '^-- QuickCheck tests' \
+  | grep -v '^import' \
+  | grep -v '^ *(.*) *$' \
+  | grep -v '^\{-#' \
+  | grep -v '^  ) where' \
+  | grep -v 'test :: Test' \
+  | sed -r '/^ *.{,5} *$/d' > ${TEMPFILE}
+
+
+numWords=$(cat ${TEMPFILE} | wc -w)
+if [ ${numWords} -gt 10 ]
+then
+    cat ${TEMPFILE}
+    exit 1
+else
+    exit 0
+fi
+rm ${TEMPFILE}

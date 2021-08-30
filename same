@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+#: A quick script to find common sections between two files.
+#: 
+#: Usage:
+#: 
+#:   same [OPTION] FILE1 FILE2
+#: 
+#: Most options that work with "diff" should also work with "same"
+
+diff --unified=100000 $* | grep '^ ' | sed 's/^ //'
+

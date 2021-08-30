@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#: A script to find common code between all pairs of Haskell files in the current directory.
+
+files=`find ${1:-.} -name dist-newstyle -prune -o -name '*.hs' -print | sort`
+
+# function fhs() { find ${1:-.} -name dist-newstyle -prune -o -name '*.hs' -print | sort ;}
+# files=`fhs | grep -v example | grep -v Setup.hs | grep -v OLD | grep -v tutorial | grep -v unused | sort`
+
+TEMPFILE="$(mktemp)"
+
+for file1 in $files
+do
+    for file2 in $files
+    do
+        # Don't compare a file to itself.
+        # Only compare a pair of files once.
+        if [[ "${file1}" < "${file2}" ]]
+        then
+            haskell-same ${file1} ${file2} > ${TEMPFILE}
+
+            if [ -s ${TEMPFILE} ]
+            then
+                echo "Possible duplicate code in $file1 and $file2"
+                cat ${TEMPFILE}
+                echo ""
+            fi
+            rm ${TEMPFILE}
+        fi
+    done
+done
