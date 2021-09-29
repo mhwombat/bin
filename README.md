@@ -21,6 +21,9 @@ source amy-prompt.sh
 ## copyWithRef
 Copies text with some info about where it came from.
 
+## duplicated-haskell-code
+A script to find common code between all pairs of Haskell files in the current directory.
+
 ## dw
 Sets up, verifies, and maintains links for dotfiles.
 For each file listed in ${CONFIG_FILE}, this script will:
@@ -35,9 +38,6 @@ set up links for the first time on a new machine,
 put additional files under dotfile management (add them to ${CONFIG_FILE} first),
 or simply verify that existing links are correct.
 
-## fhs
-Find all Haskell source files in the current Stack project.
-
 ## fix-copyright.sh
 Update the copyright date for all Haskell files in and under the current directory.
 You will see a preview of all changes before they are made.
@@ -45,6 +45,9 @@ You will see a preview of all changes before they are made.
 ## fixit.sh
 A template for making a change to a group of files,
 previewing each change before it is made.
+
+## format-zpl
+Format text for printing to a label printer using ZPL.
 
 ## git-summary
 git-summary - summarize git repos at some path
@@ -58,6 +61,13 @@ Freely distributed under the MIT license. 2018@MirkoLedda
 Pandoc filter to process code blocks with class "graphviz" into
 graphviz-generated images.
 Needs pygraphviz.
+
+## haskell-same
+A quick script to find common code between two Haskell files.
+
+Usage:
+
+  haskell-same FILE1 FILE2
 
 ## head-tail
 `head-tail n k` returns the first n rows and the last k rows.
@@ -76,8 +86,17 @@ creating a single BibTex file.
 ## make-readme
 Creates this file (README.md).
 
-## searchHaskell
-Search Haskell files for a string.
+## rename-pdf
+Renames a PDF file according to author and title.
+
+## same
+A quick script to find common sections between two files.
+
+Usage:
+
+  same [OPTION] FILE1 FILE2
+
+Most options that work with "diff" should also work with "same"
 
 ## snippy
 Select snippets of text (including code) and paste them wherever.
@@ -96,12 +115,13 @@ Usage example:
    tex2png.sh sample.png < sample.tex
 ```
 
-You will probably want to use the varwidth parameter on documentclass,
-and override the default margins.
+Your document should use the standalone document class
+and set `convert=true`.
+You may wish to override the default margins.
 Here's a sample minimal LaTeX document that you can use as a starting point.
 
 ```
-  \documentclass[varwidth,convert,margin=4pt]{standalone}
+  \documentclass[convert=true,margin=4pt]{standalone}
   \begin{document}
   \huge
   Hello world!
