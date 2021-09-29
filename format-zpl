@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#: Format text for printing to a label printer using ZPL.
+echo "^XA"
+echo "^CI28"
+echo "^MNN,0"
+echo "^LL200"
+
+let ypos=35
+
+while read -r line ; do
+    echo "^FO150,${ypos}^AON,28,14^FD${line}^FS"
+    let ypos=ypos+35
+done
+
+echo "^XZ"
