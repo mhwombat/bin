@@ -1,11 +1,19 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 #: Read all BibTeX entries from my citation management system,
 #: creating a single BibTex file.
+
+INPUT_BIBS=$*
+
+if [[ ! $INPUT_BIBS ]]; then
+    INPUT_BIBS=$(find ~/github/taighde ~/github/leabhartha -name '*.bib')
+fi
+
 echo "% Created by Amy's make-bib at "`date`
-for file in `find ~/github/taighde ~/github/leabhartha -name '*.bib'`
+for file in ${INPUT_BIBS}
 do
-	>&2 echo Processing $file
-        tag=$(basename "$file")
-        tag=${tag%.*}
-        sed "s/XXX_SEE_FILENAME_XXX/${tag}/" $file
+    >&2 echo Processing $file
+    echo "% $file"
+    tag=$(basename "$file")
+    tag=${tag%.*}
+    sed "s/XXX_SEE_FILENAME_XXX/${tag}/" $file
 done
