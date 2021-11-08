@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+#: Display my current key bindings
+
+cd /home/amy/dotWombat/.config/sway
+make keys.txt
+yad --filename=keys.txt --text-info
+
