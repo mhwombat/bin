@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+#: Fetch the BibTeX information for a DOI.
+#:
+#: Example:
+#:
+#:    doi2bib 10.1162/artl_a_00074
+#:
+#: Requirements: curl
+
+doi=$1
+
+function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+
+# Use curl to fetch the info.
+# Use sed to convert urlencoded to hex.
+# Use printf to format the hex characters.
+curl --silent --location --header "Accept: application/x-bibtex" "https://doi.org/${doi}" \
+    | sed -e 's/%\(..\)/\\x\1/g' \
+    | xargs -0 printf "%b"
