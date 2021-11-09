@@ -1,17 +1,21 @@
 #!/usr/bin/env sh
-#: Copy BibTeX information and put it into my citation management system.
+#: Read BibTeX information from paste buffer and put it into my citation management system.
 #: I keep each BibTeX in a separate file.
 #: The name of the file is the BibTeX key.
 
 read -p "Select BibTeX snippet. Press ENTER to proceed." tag
 file="$(mktemp)"
-# xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' > $file
-xsel -o | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' | bibclean > $file
-cat $file
-read -p "Tag? " tag
-#mv -i $file ~/github/taighde/${tag}.bib
-mv -i $file ./${tag}.bib
-#mv -i $file ${tag}.bib
 
-#isbn=`grep 'isbn =' ${tag}.bib | sed 's/.*{//; s/}.*//'`
-#echo "${tag}__${isbn}.epub"
+case ${XDG_SESSION_TYPE} in
+    wayland)
+        PASTE_COMMAND=wl-paste
+        ;;
+    *)
+        PASTE_COMMAND=xsel -o
+esac
+
+${PASTE_COMMAND} | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' | bibclean > $file
+cat $file
+
+read -p "Tag? " tag
+mv -i $file ./${tag}.bib
