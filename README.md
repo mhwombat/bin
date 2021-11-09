@@ -4,9 +4,11 @@ A collection of useful scripts.
 Each script is summarised below.
 
 ## amy-bib
-Copy BibTeX information and put it into my citation management system.
+Read BibTeX information from paste buffer and put it into my citation management system.
 I keep each BibTeX in a separate file.
 The name of the file is the BibTeX key.
+
+## amy-prompt.hs
 
 ## amy-prompt.sh
 Set the colour of the bash prompt according to the current directory.
@@ -20,6 +22,12 @@ source amy-prompt.sh
 
 ## copyWithRef
 Copies text with some info about where it came from.
+
+## doi2bib
+Fetch the BibTeX information for a DOI.
+Example:
+   doi2bib 10.1162/artl_a_00074
+Requirements: curl
 
 ## duplicated-haskell-code
 A script to find common code between all pairs of Haskell files in the current directory.
@@ -76,6 +84,9 @@ Useful, for example, when you want the header of a file plus the ending.
 ## htmlify
 Replaces all line endings with HTML break tags.
 
+## keyhelp
+Display my current key bindings
+
 ## logic2tex
 Convert a logic sentence using unicode characters to Tex (LaTeX)
 
@@ -100,6 +111,11 @@ Most options that work with "diff" should also work with "same"
 
 ## snippy
 Select snippets of text (including code) and paste them wherever.
+
+## sync-transform.sh
+A template for a script that synchronises two directories,
+except that instead of copying files it performs some sort
+of transformation.
 
 ## tex2png.py
 Pandoc filter to convert code blocks with class "tex2png" into
