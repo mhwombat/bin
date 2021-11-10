@@ -90,12 +90,23 @@ Display my current key bindings
 ## logic2tex
 Convert a logic sentence using unicode characters to Tex (LaTeX)
 
+## ls-theme-demo
+Demo of the colour scheme currently used by ls.
+You might use this, for example, if you want to test different themes.
+
 ## make-bib
 Read all BibTeX entries from my citation management system,
 creating a single BibTex file.
 
 ## make-readme
 Creates this file (README.md).
+
+## pdf2doi
+Extract the DOI from a PDF.
+Usage:
+   pdf2doi [filename]
+If no filename is specified, read from stdin.
+Requirements: pdfinfo (install poppler_utils), pdftotext (install xpdf or python's pdftotext).
 
 ## rename-pdf
 Renames a PDF file according to author and title.
