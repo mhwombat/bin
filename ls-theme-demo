@@ -1,0 +1,161 @@
+#!/usr/bin/env sh
+#: Demo of the colour scheme currently used by ls.
+#: You might use this, for example, if you want to test different themes.
+
+TMPDIR=$(mktemp -d "ls-theme-demo_XXXXX")
+echo ${TMPDIR}
+cd ${TMPDIR}
+
+#
+# Create different types of files, etc. for the demo.
+#
+
+mkdir subdirectory
+touch example.txt
+ln -s example.txt symlink
+# TODO MULTIHARDLINK 00 # regular file with more than one link
+mkfifo fifo-pipe
+# TODO SOCK # socket
+# TODO DOOR # door
+# TODO BLK;01 # block device driver
+# TODO CHR;01 # character device driver
+
+# Create an orphan (symlink to nonexistent file, or non-stat'able file ...)
+touch deleteme.txt
+ln -s deleteme.txt orphan
+rm deleteme.txt
+
+# TODO MISSING 00 # file an (orphan?) symlink points to
+# TODO SETUID # file that is setuid (u+s)
+# TODO SETGID # file that is setgid (g+s)
+# TODO CAPABILITY # file with capability
+# TODO STICKY_OTHER_WRITABLE # dir that is sticky and other-writable (+t,o+w)
+# TODO OTHER_WRITABLE # dir that is other-writable (o+w) and not sticky
+# TODO STICKY # dir with the sticky bit set (+t) and not other-writable
+
+touch executable
+chmod +x executable
+
+touch archive.tar
+touch archive.tgz
+touch archive.arc
+touch archive.arj
+touch archive.taz
+touch archive.lha
+touch archive.lz4
+touch archive.lzh
+touch archive.lzma
+touch archive.tlz
+touch archive.txz
+touch archive.tzo
+touch archive.t7z
+touch archive.zip
+touch archive.z
+touch archive.dz
+touch archive.gz
+touch archive.lrz
+touch archive.lz
+touch archive.lzo
+touch archive.xz
+touch archive.zst
+touch archive.tzst
+touch archive.bz2
+touch archive.bz
+touch archive.tbz
+touch archive.tbz2
+touch archive.tz
+touch archive.deb
+touch archive.rpm
+touch archive.jar
+touch archive.war
+touch archive.ear
+touch archive.sar
+touch archive.rar
+touch archive.alz
+touch archive.ace
+touch archive.zoo
+touch archive.cpio
+touch archive.7z
+touch archive.rz
+touch archive.cab
+touch archive.wim
+touch archive.swm
+touch archive.dwm
+touch archive.esd
+touch image.jpg
+touch image.jpeg
+touch image.mjpg
+touch image.mjpeg
+touch image.gif
+touch image.bmp
+touch image.pbm
+touch image.pgm
+touch image.ppm
+touch image.tga
+touch image.xbm
+touch image.xpm
+touch image.tif
+touch image.tiff
+touch image.png
+touch image.svg
+touch image.svgz
+touch image.mng
+touch image.pcx
+touch image.mov
+touch image.mpg
+touch image.mpeg
+touch image.m2v
+touch image.mkv
+touch image.webm
+touch image.webp
+touch image.ogm
+touch image.mp4
+touch image.m4v
+touch image.mp4v
+touch image.vob
+touch image.qt
+touch image.nuv
+touch image.wmv
+touch image.asf
+touch image.rm
+touch image.rmvb
+touch image.flc
+touch image.avi
+touch image.fli
+touch image.flv
+touch image.gl
+touch image.dl
+touch image.xcf
+touch image.xwd
+touch image.yuv
+touch image.cgm
+touch image.emf
+touch videl.ogv
+touch videl.ogx
+touch video.oga
+touch audio.aac
+touch audio.au
+touch audio.flac
+touch audio.m4a
+touch audio.mid
+touch audio.midi
+touch audio.mka
+touch audio.mp3
+touch audio.mpc
+touch audio.ogg
+touch audio.ra
+touch audio.wav
+touch audio.opus
+touch audio.spx
+touch playlist.xspf
+
+#
+# The actual demo
+#
+ls --color
+
+#
+# Clean up
+#
+cd ..
+rm -rf ${TMPDIR}

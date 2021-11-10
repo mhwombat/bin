@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+#: Extract the DOI from a PDF.
+#:
+#: Usage:
+#:
+#:    pdf2doi [filename]
+#:
+#: If no filename is specified, read from stdin.
+#:
+#: Requirements: pdfinfo (install poppler_utils), pdftotext (install xpdf or python's pdftotext).
+
+method1() {
+  pdfinfo $1 | grep '^Subject: .*;10\.' | head -n 1 | sed 's/.*;10\./10./'
+}
+
+method2() {
+  pdfinfo -meta $1 | grep 'prism:doi' | head -n 1 | sed 's_.*<prism:doi>__; s_</prism:doi>.*__'
+}
+
+method3() {
+  pdftotext -l 3 $1 - | grep -e '10\.[0-9]*/' | head -n 1 | sed 's/.*\(10\.[0-9]*\)/\1/'
+}
+
+DOI=$(method1 $1)
+
+if [ -z "${DOI}" ]; then
+    # echo "Trying method 2 for $1"
+    DOI=$(method2 $1)
+fi
+
+if [ -z "${DOI}" ]; then
+    # echo "Trying method 3 for $1"
+    DOI=$(method3 $1)
+fi
+
+if [ -z "${DOI}" ]; then
+    DOI=???
+fi
+
+echo "DOI for $1 is ${DOI}"
