@@ -57,6 +57,14 @@ previewing each change before it is made.
 ## format-zpl
 Format text for printing to a label printer using ZPL.
 
+## gen-base16-scheme.py
+Generate a colour scheme using the "base16" architecture
+(see http://www.chriskempson.com/projects/base16/).
+Examples:
+    gen-base16-scheme.py ff00ff
+    gen-base16-scheme.py D3E067
+Note that the colour you supply may be slightly adjusted by rounding.
+
 ## git-summary
 git-summary - summarize git repos at some path
 
@@ -108,6 +116,9 @@ Usage:
 If no filename is specified, read from stdin.
 Requirements: pdfinfo (install poppler_utils), pdftotext (install xpdf or python's pdftotext).
 
+## preview-themes
+Generate a preview of a colour scheme.
+
 ## rename-pdf
 Renames a PDF file according to author and title.
 
@@ -119,6 +130,9 @@ Usage:
   same [OPTION] FILE1 FILE2
 
 Most options that work with "diff" should also work with "same"
+
+## set-theme
+Change colour scheme for supported apps.
 
 ## snippy
 Select snippets of text (including code) and paste them wherever.
