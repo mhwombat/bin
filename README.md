@@ -9,6 +9,7 @@ I keep each BibTeX in a separate file.
 The name of the file is the BibTeX key.
 
 ## amy-prompt.hs
+A work in progress; not currently in use.
 
 ## amy-prompt.sh
 Set the colour of the bash prompt according to the current directory.

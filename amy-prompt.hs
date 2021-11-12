@@ -1,6 +1,7 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -p "haskellPackages.ghcWithPackages (p: [])"
 #! nix-shell -i runghc
+#: A work in progress; not currently in use.
 
 import           Data.Char             (ord)
 import           Data.List             (foldl')
