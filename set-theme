@@ -3,12 +3,13 @@
 
 THEMEDIR=~/dotWombat/themes
 
-# preview
-preview-theme $1 > ${THEMEDIR}/$1.html
-
 # foot
 FOOT_THEME_DIR=~/dotWombat/.config/foot
 mustache ${THEMEDIR}/$1.json ${FOOT_THEME_DIR}/foot.mustache > ${FOOT_THEME_DIR}/foot.ini
+
+# alacritty
+ALACRITTY_THEME_DIR=~/dotWombat/.config/alacritty
+mustache ${THEMEDIR}/$1.json ${ALACRITTY_THEME_DIR}/alacritty.yml.mustache > ${ALACRITTY_THEME_DIR}/alacritty.yml
 
 # emacs
 EMACS_THEME_DIR=~/dotWombat/.config/emacs/amy/themes

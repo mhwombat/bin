@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-#: Generate a preview of a colour scheme.
+#: Generate previews of all defined colour schemes.
 THEME_DIR=~/dotWombat/themes
 PREVIEW_DIR=${THEME_DIR}/previews
 TEMPLATE_FILE=${THEME_DIR}/html.mustache
