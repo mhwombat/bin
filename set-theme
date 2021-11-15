@@ -3,6 +3,10 @@
 
 THEMEDIR=~/dotWombat/themes
 
+# zsh
+ZSH_THEME_DIR=~/dotWombat/.config/zsh
+mustache ${THEMEDIR}/$1.json ${ZSH_THEME_DIR}/zshrc.mustache > ${ZSH_THEME_DIR}/.zshrc
+
 # foot
 FOOT_THEME_DIR=~/dotWombat/.config/foot
 mustache ${THEMEDIR}/$1.json ${FOOT_THEME_DIR}/foot.mustache > ${FOOT_THEME_DIR}/foot.ini
