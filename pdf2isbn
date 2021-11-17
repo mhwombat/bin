@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+#: Extract the ISBN from a PDF.
+#:
+#: Usage:
+#:
+#:    pdf2doi [filename]
+#:
+#: If no filename is specified, read from stdin.
+#:
+#: Requirements: pdfinfo (install poppler_utils), pdftotext (install xpdf or python's pdftotext).
+
+method1() {
+  pdfinfo $1 | sed -n 's/.*ISBN:* *\([0-9\-]\+\)/\1/Ip'
+}
+
+method2() {
+  pdfinfo -meta $1 | sed -n 's/.*>ISBN:* *\(.*\)<.*/\1/p'
+}
+
+method3() {
+  pdftotext -l 10 $1 - | sed -n 's/.*isbn/ISBN/ip'
+}
+
+method4() {
+  pdftotext -l 10 $1 - | sed -n 's/.*\(978\)/\1/ip'
+}
+
+method5() {
+  pdftotext -l 10 $1 - | sed -n 's/.*0-/0-/ip'
+}
+
+ISBN=$(method1 $1)
+
+if [ -z "${ISBN}" ]; then
+    # echo "Trying method 2 for $1"
+    ISBN=$(method2 $1)
+fi
+
+if [ -z "${ISBN}" ]; then
+    # echo "Trying method 3 for $1"
+    ISBN=$(method3 $1)
+fi
+
+if [ -z "${ISBN}" ]; then
+    # echo "Trying method 4 for $1"
+    ISBN=$(method4 $1)
+fi
+
+if [ -z "${ISBN}" ]; then
+    # echo "Trying method 5 for $1"
+    ISBN=$(method4 $1)
+fi
+
+if [ -z "${ISBN}" ]; then
+    ISBN=???
+fi
+
+echo "ISBN for $1 is ${ISBN}"
