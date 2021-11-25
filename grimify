@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+cd /home/amy
+/run/current-system/sw/bin/grim before.png

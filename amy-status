@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# amy-status - BLAH BLAH BLAH at a configurable sample interval
+#
+# Usage: amy-status INTERVAL_IN_SECONDS
+#
+#
+# Example yambar configuration (update every second):
+#
+#  - script:
+#      path: /path/to/amy-status
+#      args: [1]
+#      content: {string: {text: "{wombat}%"}}
+#
+
+interval=${1}
+
+case ${interval} in
+    ''|*[!0-9]*)
+        echo "interval must be an integer"
+        exit 1
+        ;;
+    *)
+        ;;
+esac
+
+
+while true; do
+    echo "wombat|int|7"
+
+    echo ""
+    sleep "${interval}"
+done
