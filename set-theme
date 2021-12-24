@@ -23,10 +23,14 @@ mustache ${THEMEDIR}/$1.json ${EMACS_THEME_DIR}/base16-current-theme.mustache > 
 WAYBAR_THEME_DIR=~/dotWombat/.config/waybar
 mustache ${THEMEDIR}/$1.json ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
 
-
 # sway
 SWAY_THEME_DIR=~/dotWombat/.config/sway
 mustache ${THEMEDIR}/$1.json ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR}/colours
+
+# amys_launcher
+AMYS_LAUNCHER_THEME_DIR=~/bin
+mustache ${THEMEDIR}/$1.json ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
+chmod +x ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
 
 # river
 # RIVER_THEME_DIR=~/dotWombat/.config/river
