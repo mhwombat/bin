@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+#: Themed launcher
+
+bemenu-run --bottom --prompt '' \
+           --tb '#080a0b' \
+           --tf '#f3f4f6' \
+           --nb '#080a0b' \
+           --nf '#f3f4f6' \
+           --hb '#b299ff' \
+           --hf '#080a0b' \
+           --ff '#99ccff'
