@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+#: Clean all ".bib" files in the current directory,
+#: previewing each change before it is made.
+
+for file in `ls *.bib`
+do
+        echo Editing $file
+        biber --tool --validate-datamodel --quiet $file --output-file=$file.backup
+        rm $file.blg
+	diff $file $file.backup
+	result=$?
+	if [ $result -gt 0 ] ; then 
+		if [ ! -z "$force" ]; then
+		    answer="y"
+		else
+		    read -p "ok (y/n/A) " answer
+		    echo "answer=" $answer
+		    if [ "$answer" = "A" ] ; then
+			force=1
+		    fi
+		fi
+		if [ "$answer" = "y" ] ; then 
+			cp $file.backup $file
+			echo File replaced
+		fi
+	else
+		rm $file.backup
+	fi
+done

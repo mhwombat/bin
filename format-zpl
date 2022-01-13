@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 #: Format text for printing to a label printer using ZPL.
+TEMPFILE="$(mktemp)"
+
+let LINE_HEIGHT=35
+let ypos=${LINE_HEIGHT}
+
+while read -r line ; do
+    echo "^FO150,${ypos}^AON,28,14^FD${line}^FS" >> ${TEMPFILE}
+    let ypos=ypos+${LINE_HEIGHT}
+done
+
 echo "^XA"
 echo "^CI28"
 echo "^MNN,0"
-echo "^LL200"
-
-let ypos=35
-
-while read -r line ; do
-    echo "^FO150,${ypos}^AON,28,14^FD${line}^FS"
-    let ypos=ypos+35
-done
-
+echo "^LL${ypos}"
+cat ${TEMPFILE}
 echo "^XZ"
+
+rm ${TEMPFILE}
