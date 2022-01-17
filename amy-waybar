@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-#: Temporary workaround
-
-cd ~/Waybar
-build/waybar >/home/amy/waybar.log 2>&1
