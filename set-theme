@@ -27,6 +27,10 @@ mustache ${THEMEDIR}/$1.json ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_T
 SWAY_THEME_DIR=~/dotWombat/.config/sway
 mustache ${THEMEDIR}/$1.json ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR}/colours
 
+# river
+RIVER_THEME_DIR=~/dotWombat/.config/river
+mustache ${THEMEDIR}/$1.json ${RIVER_THEME_DIR}/colours.mustache > ${RIVER_THEME_DIR}/colours
+
 # qtile
 QTILE_THEME_DIR=~/dotWombat/.config/qtile
 mustache ${THEMEDIR}/$1.json ${QTILE_THEME_DIR}/colour.py.mustache > ${QTILE_THEME_DIR}/colour.py
@@ -35,7 +39,3 @@ mustache ${THEMEDIR}/$1.json ${QTILE_THEME_DIR}/colour.py.mustache > ${QTILE_THE
 AMYS_LAUNCHER_THEME_DIR=~/bin
 mustache ${THEMEDIR}/$1.json ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
 chmod +x ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
-
-# river
-# RIVER_THEME_DIR=~/dotWombat/.config/river
-# mustache ${THEMEDIR}/$1.json ${RIVER_THEME_DIR}/init.mustache > ${RIVER_THEME_DIR}/init
