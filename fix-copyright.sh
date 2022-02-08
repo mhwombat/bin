@@ -6,13 +6,13 @@ for file in `find . \( -name '*.hs' -o -name '*.cabal' -o -name LICENSE \)`
 
 do
 	echo Editing $file
-#	sed 's/(c) Amy de Buitléir \(20..\)$/(c) Amy de Buitléir \1-2021/; s/ \(20..\) Amy de Buitléir/ \1-2020 Amy de Buitléir/; s/-20../-2021/' $file > $file.backup
+#	sed 's/(c) Amy de Buitléir \(20..\)$/(c) Amy de Buitléir \1-2022/; s/ \(20..\) Amy de Buitléir/ \1-2020 Amy de Buitléir/; s/-20../-2022/' $file > $file.backup
         sed '
              s/(c) Amy de Buitléir \(.*\)/(c) \1 Amy de Buitléir/
-             s/\((c) 20..\)$/\1-2021/
-             s/\((c) 20..\)-..../\1-2021/
-             s/\(copyright: *20..\)$/\1-2021/
-             s/\(copyright: *20..\)-..../\1-2021/
+             s/\((c) 20..\)$/\1-2022/
+             s/\((c) 20..\)-..../\1-2022/
+             s/\(copyright: *20..\)$/\1-2022/
+             s/\(copyright: *20..\)-..../\1-2022/
             ' $file > $file.backup
 	diff $file $file.backup
 	result=$?
