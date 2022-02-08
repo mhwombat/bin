@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+#: Display my current key bindings
+
+configDir=$1
+
+cd ${configDir}
+make keys.txt
+yad --filename=keys.txt --text-info
+
