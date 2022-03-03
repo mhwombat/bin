@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# do it this way so we continue after failures
+for file in `ls /nix/store/*.lock`
+do
+    nix-store --delete $file
+done
