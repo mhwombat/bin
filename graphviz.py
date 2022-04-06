@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p "python3.withPackages(ps: [ ps.pygraphviz ps.pandocfilters ])"
 #: Pandoc filter to process code blocks with class "graphviz" into
 #: graphviz-generated images.
 #: Needs pygraphviz.
