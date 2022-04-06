@@ -27,25 +27,26 @@ fi
 
 for file in `ls *.html`
 do
-	echo Editing $file
-	sed 's/aaaaa/bbbbb/' $file > $file.backup
-	diff $file $file.backup
-	result=$?
-	if [ $result -gt 0 ] ; then 
-		if [ ! -z "$force" ]; then
-		    answer="y"
-		else
-		    read -p "ok (y/n/A) " answer
-		    echo "answer=" $answer
-		    if [ "$answer" = "A" ] ; then
-			force=1
-		    fi
-		fi
-		if [ "$answer" = "y" ] ; then 
-			cp $file.backup $file
-			echo File replaced
-		fi
-	else
-		rm $file.backup
-	fi
+    echo Editing $file
+    sed 's/aaaaa/bbbbb/' $file > $file.new
+    diff $file $file.new
+    result=$?
+    if [ $result -gt 0 ] ; then 
+        if [ ! -z "$force" ]; then
+            answer="y"
+        else
+            read -p "ok (y/n/A) " answer
+            echo "answer=" $answer
+            if [ "$answer" = "A" ] ; then
+            force=1
+            fi
+        fi
+        if [ "$answer" = "y" ] ; then
+            mv -f $file $file.backup
+            mv -f $file.new $file
+            echo File replaced
+        fi
+    else
+        rm $file.new
+    fi
 done
