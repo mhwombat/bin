@@ -37,6 +37,10 @@ mustache ${THEMEDIR}/$1.json ${RIVER_THEME_DIR}/colours.mustache > ${RIVER_THEME
 QTILE_THEME_DIR=~/dotWombat/.config/qtile
 mustache ${THEMEDIR}/$1.json ${QTILE_THEME_DIR}/colour.py.mustache > ${QTILE_THEME_DIR}/colour.py
 
+# starship
+STARSHIP_THEME_DIR=~/dotWombat/.config
+mustache ${THEMEDIR}/$1.json ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
+
 # amys_launcher
 AMYS_LAUNCHER_THEME_DIR=~/bin
 mustache ${THEMEDIR}/$1.json ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
