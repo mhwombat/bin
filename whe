@@ -6,10 +6,7 @@
 dir=`pwd | sed 's@.*/@@'`
 files=`ls notes *.nix *.cabal CHANGELOG.md`
 
-files="${files} `find -name dist-newstyle -prune -o -name '*.hs' -or -name '*.lhs' | sort`"
-
-#gedit ${files} &
-#cream ${files} &
-#gvim ${files} &
+files="${files} `find . -not \( -name dist-newstyle -prune \) -name '*.hs' -or -name '*.lhs' | sort`"
+# echo ${files}
 emacs --title "${dir} : emacs" ${files} &
 
