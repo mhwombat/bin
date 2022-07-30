@@ -3,10 +3,18 @@
 A collection of useful scripts.
 Each script is summarised below.
 
+## all-history
+Display bash history for all sessions.
+I keep a separate history file for each bash session.
+
 ## amy-bib
 Read BibTeX information from paste buffer and put it into my citation management system.
 I keep each BibTeX in a separate file.
 The name of the file is the BibTeX key.
+
+## amy-bib-gen
+Read all BibTeX entries from my citation management system,
+creating a single BibTex file.
 
 ## amy-prompt.hs
 A work in progress; not currently in use.
@@ -21,8 +29,30 @@ To use this script, put the following line in your shell configuration file
 source amy-prompt.sh
 ```
 
+## amys-launcher
+Themed launcher
+
+## amys-launcher.mustache
+Themed launcher
+
+## amy-status
+
+## clean-bib
+Clean all ".bib" files in the current directory,
+previewing each change before it is made.
+
+## clear-nixos-locks
+
 ## copyWithRef
 Copies text with some info about where it came from.
+
+## count-files
+`count-files [PATH]..` reports the number of files in each PATH, including
+any hidden files and subdirectories. 
+The directories themselves are also counted.
+Tip: Because of the way glob patterns work, `count-files *` will ignore any
+hidden files in the current directory. One workaround is 
+`count-files .??* *`
 
 ## doi2bib
 Fetch the BibTeX information for a DOI.
@@ -79,6 +109,8 @@ Pandoc filter to process code blocks with class "graphviz" into
 graphviz-generated images.
 Needs pygraphviz.
 
+## grimify
+
 ## haskell-same
 A quick script to find common code between two Haskell files.
 
@@ -93,6 +125,9 @@ Useful, for example, when you want the header of a file plus the ending.
 ## htmlify
 Replaces all line endings with HTML break tags.
 
+## key-help
+Display my current key bindings
+
 ## keyhelp
 Display my current key bindings
 
@@ -102,10 +137,6 @@ Convert a logic sentence using unicode characters to Tex (LaTeX)
 ## ls-theme-demo
 Demo of the colour scheme currently used by ls.
 You might use this, for example, if you want to test different themes.
-
-## make-bib
-Read all BibTeX entries from my citation management system,
-creating a single BibTex file.
 
 ## make-readme
 Creates this file (README.md).
@@ -117,8 +148,15 @@ Usage:
 If no filename is specified, read from stdin.
 Requirements: pdfinfo (install poppler_utils), pdftotext (install xpdf or python's pdftotext).
 
+## pdf2isbn
+Extract the ISBN from a PDF.
+Usage:
+   pdf2doi [filename]
+If no filename is specified, read from stdin.
+Requirements: pdfinfo (install poppler_utils), pdftotext (install xpdf or python's pdftotext).
+
 ## preview-themes
-Generate a preview of a colour scheme.
+Generate previews of all defined colour schemes.
 
 ## rename-pdf
 Renames a PDF file according to author and title.
@@ -137,6 +175,8 @@ Change colour scheme for supported apps.
 
 ## snippy
 Select snippets of text (including code) and paste them wherever.
+
+## sway-tree-switcher
 
 ## sync-transform.sh
 A template for a script that synchronises two directories,
@@ -170,6 +210,9 @@ Here's a sample minimal LaTeX document that you can use as a starting point.
   \end{document}
 ```
 
+
+## we
+A wrapper for my favourite editor.
 
 ## whe
 A quick script to load all of the Haskell source files
