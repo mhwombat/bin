@@ -8,5 +8,5 @@ files=`ls notes *.nix *.cabal CHANGELOG.md`
 
 files="${files} `find . -not \( -name dist-newstyle -prune \) -name '*.hs' -or -name '*.lhs' | sort`"
 # echo ${files}
-emacs --title "${dir} : emacs" ${files} &
-
+# emacs --title "${dir} : emacs" ${files} &
+we --force --nosession --userhome $XDG_CONFIG_HOME/textadept ${files} &
