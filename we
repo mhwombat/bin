@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 #: A wrapper for my favourite editor.
 
-~/textadept/textadept --force --nosession --userhome $XDG_CONFIG_HOME/textadept $*
+textadept --force --nosession --userhome $XDG_CONFIG_HOME/textadept $*
