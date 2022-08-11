@@ -17,7 +17,7 @@ for file in `find . -name LICENSE -prune \
 		 | sort`
 do
   file=$(echo $file | sed 's_.*/__')
-  echo "## [$file](/mhwombat/bin/blob/master/$file)"
+  echo "## [$file](https://github.com/mhwombat/bin/blob/master/$file)"
   echo ""
   grep '^#:' $file | sed 's/^#: //; s/^#://'
   echo ''
