@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+#: Set up a directory for Nix+Hskell development.
+
+
+cat << EOF > default.nix
+let
+  pkgs = import <nixpkgs> { };
+in
+  pkgs.haskellPackages.developPackage {
+    root = ./.;
+  }
+EOF
+
+cat << EOF > .envrc
+use nix
+EOF
