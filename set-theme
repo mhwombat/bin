@@ -1,47 +1,50 @@
-#!/usr/bin/env sh
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p mustache-go
 #: Change colour scheme for supported apps.
 
-THEMEDIR=~/dotWombat/themes
+DOTDIR=~/github/dotWombat
+CONFIGDIR=${DOTDIR}/.config
+THEMEDIR=${DOTDIR}/themes
 
 # zsh
-ZSH_THEME_DIR=~/dotWombat/.config/zsh
+ZSH_THEME_DIR=${CONFIGDIR}/zsh
 mustache ${THEMEDIR}/$1.json ${ZSH_THEME_DIR}/configure-spaceship.mustache > ${ZSH_THEME_DIR}/configure-spaceship
 
 # foot
-FOOT_THEME_DIR=~/dotWombat/.config/foot
+FOOT_THEME_DIR=${CONFIGDIR}/foot
 mustache ${THEMEDIR}/$1.json ${FOOT_THEME_DIR}/foot.mustache > ${FOOT_THEME_DIR}/foot.ini
 
 # alacritty
-ALACRITTY_THEME_DIR=~/dotWombat/.config/alacritty
+ALACRITTY_THEME_DIR=${CONFIGDIR}/alacritty
 mustache ${THEMEDIR}/$1.json ${ALACRITTY_THEME_DIR}/alacritty.yml.mustache > ${ALACRITTY_THEME_DIR}/alacritty.yml
 
 # emacs
-EMACS_DIR=~/dotWombat/.config/emacs/amy
+EMACS_DIR=${CONFIGDIR}/emacs/amy
 mustache ${THEMEDIR}/$1.json ${EMACS_DIR}/completion.mustache > ${EMACS_DIR}/completion.el
-EMACS_THEME_DIR=~/dotWombat/.config/emacs/amy/themes
+EMACS_THEME_DIR=${CONFIGDIR}/emacs/amy/themes
 mustache ${THEMEDIR}/$1.json ${EMACS_THEME_DIR}/base16-current-theme.mustache > ${EMACS_THEME_DIR}/base16-current-theme.el
 
 # waybar
-WAYBAR_THEME_DIR=~/dotWombat/.config/waybar
+WAYBAR_THEME_DIR=${CONFIGDIR}/waybar
 mustache ${THEMEDIR}/$1.json ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
 
 # sway
-SWAY_THEME_DIR=~/dotWombat/.config/sway
+SWAY_THEME_DIR=${CONFIGDIR}/sway
 mustache ${THEMEDIR}/$1.json ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR}/colours
 
 # river
-RIVER_THEME_DIR=~/dotWombat/.config/river
+RIVER_THEME_DIR=${CONFIGDIR}/river
 mustache ${THEMEDIR}/$1.json ${RIVER_THEME_DIR}/colours.mustache > ${RIVER_THEME_DIR}/colours
 
 # qtile
-QTILE_THEME_DIR=~/dotWombat/.config/qtile
+QTILE_THEME_DIR=${CONFIGDIR}/qtile
 mustache ${THEMEDIR}/$1.json ${QTILE_THEME_DIR}/colour.py.mustache > ${QTILE_THEME_DIR}/colour.py
 
 # starship
-STARSHIP_THEME_DIR=~/dotWombat/.config
+STARSHIP_THEME_DIR=${CONFIGDIR}
 mustache ${THEMEDIR}/$1.json ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
 
 # amys_launcher
-AMYS_LAUNCHER_THEME_DIR=~/bin
+AMYS_LAUNCHER_THEME_DIR=~/github/bin
 mustache ${THEMEDIR}/$1.json ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
 chmod +x ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
