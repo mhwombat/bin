@@ -41,7 +41,7 @@ QTILE_THEME_DIR=${CONFIGDIR}/qtile
 mustache ${THEMEDIR}/$1.json ${QTILE_THEME_DIR}/colour.py.mustache > ${QTILE_THEME_DIR}/colour.py
 
 # starship
-STARSHIP_THEME_DIR=${CONFIGDIR}
+STARSHIP_THEME_DIR=${CONFIGDIR}/starship
 mustache ${THEMEDIR}/$1.json ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
 
 # amys_launcher
