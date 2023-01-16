@@ -6,6 +6,17 @@ echo ''
 echo 'A collection of useful scripts.'
 echo 'Each script is summarised below.'
 echo ''
+echo 'Tip: Some of my scripts use "nix-shell shebangs".'
+echo 'You won't need that if you're not using Nix (or you install the pre-requisite packages globally).'
+echo 'So if the script begins with'
+echo ''
+echo '    #!/usr/bin/env nix-shell'
+echo '    #! nix-shell -i bash -p blah blah blah'
+echo ''
+echo 'You can replace that with'
+echo ''
+echo '    #!/usr/bin/sh'
+echo ''
 
 for file in `find . -name LICENSE -prune \
                  -o -name README.md -prune \

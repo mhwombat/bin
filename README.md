@@ -3,6 +3,17 @@
 A collection of useful scripts.
 Each script is summarised below.
 
+Tip: Some of my scripts use "nix-shell shebangs".
+You wont need that if youre not using Nix (or you install the pre-requisite packages globally).
+So if the script begins with
+
+    #!/usr/bin/env nix-shell
+    #! nix-shell -i bash -p blah blah blah
+
+You can replace that with
+
+    #!/usr/bin/sh
+
 ## [all-history](https://github.com/mhwombat/bin/blob/master/all-history)
 
 Display bash history for all sessions.
@@ -151,6 +162,10 @@ Usage:
 
   haskell-same FILE1 FILE2
 
+## [haskell-sanity](https://github.com/mhwombat/bin/blob/master/haskell-sanity)
+
+Check various things for Haskell development.
+
 ## [head-tail](https://github.com/mhwombat/bin/blob/master/head-tail)
 
 `head-tail n k` returns the first n rows and the last k rows.
@@ -180,6 +195,10 @@ You might use this, for example, if you want to test different themes.
 ## [make-readme](https://github.com/mhwombat/bin/blob/master/make-readme)
 
 Creates this file (README.md).
+
+## [nix-init-haskell](https://github.com/mhwombat/bin/blob/master/nix-init-haskell)
+
+Set up a directory for Nix+Hskell development.
 
 ## [pdf2doi](https://github.com/mhwombat/bin/blob/master/pdf2doi)
 
