@@ -1,0 +1,71 @@
+#! /usr/bin/env bash
+#: Reads text (e.g., Markdown or Asciidoc) from stdin,
+#: echos it to stdout,
+#: simultaneously running any commands
+#: and inserting the output immediately after the command.
+#: This is useful for writing tutorials and other documentation for software.
+#: Any line that begins with '$' is assumed to be a command.
+#: The commands can launch subshells, subsubshells, and so on...
+#: the result should be the same as if you typed the commands at
+#: a terminal.
+#:
+#: For example, the following input
+#:
+#:     ~~~
+#:     $ nix run "git+https://codeberg.org/mhwombat/hello-flake"
+#:     ~~~
+#:
+#: would result in
+#:
+#:     ~~~
+#:     $ nix run "git+https://codeberg.org/mhwombat/hello-flake"
+#:     Hello from your flake!
+#:     ~~~
+#:
+#: If you want to run a command without echoing it to the output,
+#: preceed it with '$#' instead of '$'.
+#: If the command generates messages that you don't want to include
+#: in the output, redirect stdin (and perhaps stderr) to `\dev/null`.
+#:
+#: By default, bash is used to process commands.
+#: If you want to use a different shell,
+#: make that change in your first command.
+#:
+#: One way to invoke this script is
+#:
+#:     run-code-inline < INFILE > OUTFILE 2>&1
+#:
+#: However, you may have intentionally included commands that fail,
+#: perhaps to discuss the error messages.
+#: In that case, you probably want the error messages to go to stdout
+#: rather than `stderr`, as shown in te example below.
+#:
+#:     run-code-inline < INFILE > OUTFILE 2>&1
+#:
+#: Known issue: The `exit` command will terminate the entire script.
+#: This is a problem if, for example, you want to launch a subshell,
+#: perform some actions, and then exit to the main shell.
+
+function convertToScript {
+  while IFS='' read -r p; do
+
+    hidden=$(echo $p | sed -n 's/^$#/$/p')
+
+    if [ -n "$hidden" ] ; then
+      p=$hidden
+    else
+      safe=$(echo "$p" | sed "s/'/'\\\\''/g; s/^/'/; s/$/'/") # replace ' with '\'', wrap in single quotes
+      # echo "DEBUG    p=$p"
+      # echo "DEBUG safe=$safe"
+      echo "echo $safe"
+    fi
+
+    command=$(echo $p | sed -n 's/^$ //p')
+
+    if [ -n "$command" ] ; then
+      echo "$command"
+    fi
+  done
+}
+
+convertToScript | bash 2>&1
