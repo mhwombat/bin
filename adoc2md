@@ -1,0 +1,34 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p asciidoctor pandoc
+#: Convert asciidoc syntax to markdown syntax
+#:
+#: To convert a file from asciidoc to markdown, we can use asciidoctor to generate docbook syntax,
+#: and then use pandoc to convert the docbook to markdown.
+#: However, that would produce one big markdown file, and the relative paths to images would be incorrect.
+#: Instead, we want to convert each individual asciidoc file to markdown.
+#:
+#: If we run asciidoctor in secure mode, it won't process include directives.
+#: Instead, it will convert them to links.
+#: We can then convert those links to include directives (supported by my pandoc-include-plus filter).
+#: There's one catch: the "leveloffset" in the include directives are lost.
+#: To work around this problem, we append the level offset, if any, to the filename, with "@@@" in-between.
+#:
+#: Putting it all together, the steps are:
+#: 1. Modify the asciidoc to protect the level offset (by appending it to the name of the include file).
+#: 2. Use asciidoctor to generate docbook xml.
+#: 3. Use pandoc to convert the docbook xml to markdown.
+#: 4. Convert any links which originally were asciidoc include directives into markdown include directives.
+
+function protect-level-offset {
+  # Tack the level offset onto the filename so we don't lose this information.
+  sed 's/\[leveloffset=+*\(.*\)\]/@@@\1[]/'
+}
+
+function format-include-directives {
+  # Convert links to asciidoc files into markdown include directives.
+  # The first sed substitution handles the simple case (no level offset).
+  # The second sed substitution handles the case where there is a level offset.
+  sed 's/^\[.*\](\(.*\).adoc)/~~~include\n\1.md\n~~~/; s/^\[.*\](\(.*\).adoc@@@\(.*\))/~~~{.include level="\2"}\n\1.md\n~~~/'
+}
+
+protect-level-offset | asciidoctor --backend=docbook --safe-mode=secure - | pandoc --from=docbook --write=markdown | format-include-directives
