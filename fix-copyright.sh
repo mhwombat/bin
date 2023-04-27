@@ -4,17 +4,24 @@
 
 YEAR=`date +%Y`
 
+SED_SCRIPT="
+s/(c) Amy de Buitléir \(.*\)/(c) \1 Amy de Buitléir/
+s/(c) Amy de Buitléir, \(.*\)/(c) \1 Amy de Buitléir/
+s/(c) \(.*\), Amy de Buitléir\(.*\)/(c) \1 Amy de Buitléir/
+s/\(copyright: *\)\([0-9]\)/\1(c) \2/
+s/\((c) 20..\)\([^-].*\)/\1-${YEAR}\2/
+s/\((c) 20..\)-..../\1-${YEAR}/
+# s/\(copyright:.*20..\)$/\1-${YEAR}/
+# s/\(copyright:.*20..\)-..../\1-${YEAR}/
+"
+
+# echo -e "DEBUG --- sed script ---${SED_SCRIPT}DEBUG ------------------"
+
 for file in `find . \( -name '*.hs' -o -name '*.cabal' -o -name LICENSE \)`
 
 do
 	echo Editing $file
-        sed "
-             s/(c) Amy de Buitléir \(.*\)/(c) \1 Amy de Buitléir/
-             s/\((c) 20..\)$/\1-${YEAR}/
-             s/\((c) 20..\)-..../\1-${YEAR}/
-             s/\(copyright: *20..\)$/\1-${YEAR}/
-             s/\(copyright: *20..\)-..../\1-${YEAR}/
-            " $file > $file.backup
+        sed "$SED_SCRIPT" $file > $file.backup
 	diff $file $file.backup
 	result=$?
 	if [ $result -gt 0 ] ; then

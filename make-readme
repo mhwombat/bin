@@ -7,7 +7,7 @@ echo 'A collection of useful scripts.'
 echo 'Each script is summarised below.'
 echo ''
 echo 'Tip: Some of my scripts use "nix-shell shebangs".'
-echo 'You won't need that if you're not using Nix (or you install the pre-requisite packages globally).'
+echo "You won't need that if you're not using Nix (or you install the pre-requisite packages globally)."
 echo 'So if the script begins with'
 echo ''
 echo '    #!/usr/bin/env nix-shell'
@@ -28,7 +28,7 @@ for file in `find . -name LICENSE -prune \
 		 | sort`
 do
   file=$(echo $file | sed 's_.*/__')
-  echo "## [$file](https://github.com/mhwombat/bin/blob/master/$file)"
+  echo "## $file ([script](https://github.com/mhwombat/bin/blob/master/$file))"
   echo ""
   grep '^#:' $file | sed 's/^#: //; s/^#://'
   echo ''

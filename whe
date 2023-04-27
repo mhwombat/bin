@@ -4,7 +4,7 @@
 #: into emacs.
 
 dir=`pwd | sed 's@.*/@@'`
-files=`ls notes *.nix *.cabal CHANGELOG.md`
+files=`ls notes *.nix *.cabal README.md CHANGELOG.md 2>/dev/null`
 
 files="${files} `find . -not \( -name dist-newstyle -prune \) -name '*.hs' -or -name '*.lhs' | sort`"
 # echo ${files}
