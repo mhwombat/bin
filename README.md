@@ -304,13 +304,13 @@ rather than `stderr`, as shown in te example below.
 
     run-code-inline < INFILE > OUTFILE 2>&1
 
-## Known issue: `exit`
+### Known issue: `exit`
 
 The `exit` command will terminate the entire script.
 This is a problem if, for example, you want to launch a subshell,
 perform some actions, and then exit to the main shell.
 
-## Known issue: `nix-shell`
+### Known issue: `nix-shell`
 
 The `nix-shell` command doesn't work as expected when
 used with this script; subsequent commands are executed outside the
