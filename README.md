@@ -281,7 +281,13 @@ would result in
 If you want to run a command without echoing it to the output,
 preceed it with '$#' instead of '$'.
 If the command generates messages that you don't want to include
-in the output, redirect stdin (and perhaps stderr) to `\dev/null`.
+in the output, redirect stdin (and perhaps stderr) to `/dev/null`.
+However, typically you will use this script to pre-process files
+before sending them to a publishing tool such as pandoc or asciidoctor.
+In that scenario, you can simply place the commands inside
+comments (using the appropriate syntax for the publishing tool).
+Your command and any output will be included in the pre-processed
+file (which may be useful for debugging), but not int the final output.
 
 By default, bash is used to process commands.
 If you want to use a different shell,
@@ -298,9 +304,68 @@ rather than `stderr`, as shown in te example below.
 
     run-code-inline < INFILE > OUTFILE 2>&1
 
-Known issue: The `exit` command will terminate the entire script.
+## Known issue: `exit`
+
+The `exit` command will terminate the entire script.
 This is a problem if, for example, you want to launch a subshell,
 perform some actions, and then exit to the main shell.
+
+## Known issue: `nix-shell`
+
+The `nix-shell` command doesn't work as expected when
+used with this script; subsequent commands are executed outside the
+nix shell, typically leading to errors.
+For example, the code
+
+    $ nix-shell -p cowsay
+    $ cowsay "moo"
+
+will produce the output below.
+
+    $ nix-shell -p cowsay
+    $ cowsay "moo"
+    bash: line 4: cowsay: command not found
+
+A _partial_ workaround is to use the `--run bash` switch.
+
+    $ nix-shell -p cowsay --run bash << EOL
+    $ cowsay "moo"
+    $ EOL
+
+This produces the output below.
+
+    $ nix-shell -p cowsay --run bash << EOL
+    $ cowsay "moo"
+     _____
+    < moo >
+     -----
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+    $ EOL
+
+For a complete solution, we can hide the workaround using the `$#`
+syntax.
+
+    $# echo '$ nix-shell -p cowsay'
+    $# nix-shell -p cowsay --run bash << EOL
+    $ cowsay "moo"
+    $# EOL
+
+This produces the output below.
+
+    $ nix-shell -p cowsay
+    $ cowsay "moo"
+     _____
+    < moo >
+     -----
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
 
 ## same ([script](https://github.com/mhwombat/bin/blob/master/same))
 
@@ -315,6 +380,10 @@ Most options that work with "diff" should also work with "same"
 ## set-theme ([script](https://github.com/mhwombat/bin/blob/master/set-theme))
 
 Change colour scheme for supported apps.
+
+## set-wm-keymap ([script](https://github.com/mhwombat/bin/blob/master/set-wm-keymap))
+
+Change keymap for supported window managers.
 
 ## snippy ([script](https://github.com/mhwombat/bin/blob/master/snippy))
 
