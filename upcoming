@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+#: Query the "remind" program for the next three days
+
+TEMPFILE="$(mktemp)"
+
+remind -n ~/.config/remind | sort > ${TEMPFILE}
+
+TODAY=$(date '+%Y/%m/%d')
+echo "Today"
+echo "-----"
+sed --quiet "s_^${TODAY} __p" ${TEMPFILE}
+
+echo ""
+
+TOMORROW=$(date -d 'tomorrow' '+%Y/%m/%d')
+echo "Tomorrow"
+echo "--------"
+sed --quiet "s_^${TOMORROW} __p" ${TEMPFILE}
+
+echo ""
+
+DAY3=$(date -d '+2 days' '+%Y/%m/%d')
+DAY4=$(date -d '+3 days' '+%Y/%m/%d')
+DAY5=$(date -d '+4 days' '+%Y/%m/%d')
+echo "Soon"
+echo "----"
+grep -e "${DAY3}|${DAY4}|${DAY5}" ${TEMPFILE}
+
+rm ${TEMPFILE}
