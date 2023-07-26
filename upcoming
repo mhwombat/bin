@@ -1,29 +1,43 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 #: Query the "remind" program for the next three days
+
+function stripDateTime {
+  sed 's/^[^ ]* //'
+}
+
+function messageIfEmpty {
+  events=$(cat)
+  if [[ -z $events ]]; then
+    echo No events or reminders
+  else
+    echo $events
+  fi
+}
+
+function underline {
+  tee >(sed 's/./-/g')
+}
 
 TEMPFILE="$(mktemp)"
 
 remind -n ~/.config/remind | sort > ${TEMPFILE}
 
 TODAY=$(date '+%Y/%m/%d')
-echo "Today"
-echo "-----"
-sed --quiet "s_^${TODAY} __p" ${TEMPFILE}
+date '+Today, %A, %e %B' | underline
+grep ${TODAY} ${TEMPFILE} | stripDateTime | messageIfEmpty
 
 echo ""
 
 TOMORROW=$(date -d 'tomorrow' '+%Y/%m/%d')
-echo "Tomorrow"
-echo "--------"
-sed --quiet "s_^${TOMORROW} __p" ${TEMPFILE}
+date -d 'tomorrow' '+Tomorrow, %A, %e %B' | underline
+grep ${TOMORROW} ${TEMPFILE} | stripDateTime | messageIfEmpty
 
 echo ""
 
 DAY3=$(date -d '+2 days' '+%Y/%m/%d')
 DAY4=$(date -d '+3 days' '+%Y/%m/%d')
 DAY5=$(date -d '+4 days' '+%Y/%m/%d')
-echo "Soon"
-echo "----"
-grep -e "${DAY3}|${DAY4}|${DAY5}" ${TEMPFILE}
+echo "Coming soon" | underline
+grep -e "${DAY3}|${DAY4}|${DAY5}" ${TEMPFILE} | messageIfEmpty
 
 rm ${TEMPFILE}
