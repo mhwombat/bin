@@ -20,7 +20,7 @@ function underline {
 
 TEMPFILE="$(mktemp)"
 
-remind -n ~/.config/remind | sort > ${TEMPFILE}
+remind -n -b1 ~/.config/remind | sort > ${TEMPFILE}
 
 TODAY=$(date '+%Y/%m/%d')
 date '+Today, %A, %e %B' | underline
