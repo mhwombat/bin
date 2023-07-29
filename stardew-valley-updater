@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cd ~/.steam/steam/steamapps/common/Stardew\ Valley/Mods
+
+for file in ~/Downloads/*.zip; do
+  read -p "Install $file? (y/n) " answer
+  echo "answer=" $answer
+  if [ "$answer" = "y" ] ; then
+    unzip "$file"
+    rm "$file"
+  fi
+done
+
