@@ -1,0 +1,13 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p mustache-go
+#: Change keymap for supported window managers.
+
+TEMPLATE_NAME=${1:-default}
+
+DOTDIR=~/github/dotWombat
+CONFIGDIR=${DOTDIR}/.config
+KEYMAPDIR=${DOTDIR}/wm-keymaps
+
+# sway
+SWAY_THEME_DIR=${CONFIGDIR}/sway
+mustache ${KEYMAPDIR}/${TEMPLATE_NAME}.json ${SWAY_THEME_DIR}/keymap.mustache | sed 's/Tux/$logo/' > ${SWAY_THEME_DIR}/keymap

@@ -1,6 +1,7 @@
-#!/usr/bin/env sh
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p mustache-go
 #: Generate previews of all defined colour schemes.
-THEME_DIR=~/dotWombat/themes
+THEME_DIR=~/github/dotWombat/themes
 PREVIEW_DIR=${THEME_DIR}/previews
 TEMPLATE_FILE=${THEME_DIR}/html.mustache
 

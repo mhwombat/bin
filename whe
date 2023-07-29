@@ -4,12 +4,9 @@
 #: into emacs.
 
 dir=`pwd | sed 's@.*/@@'`
-files=`ls notes *.nix *.cabal CHANGELOG.md`
+files=`ls notes *.nix *.cabal README.md CHANGELOG.md 2>/dev/null`
 
-files="${files} `find -name dist-newstyle -prune -o -name '*.hs' -or -name '*.lhs' | sort`"
-
-#gedit ${files} &
-#cream ${files} &
-#gvim ${files} &
-emacs --title "${dir} : emacs" ${files} &
-
+files="${files} `find . -not \( -name dist-newstyle -prune \) -name '*.hs' -or -name '*.lhs' | sort`"
+# echo ${files}
+# emacs --title "${dir} : emacs" ${files} &
+we --force --nosession --userhome $XDG_CONFIG_HOME/textadept ${files} &

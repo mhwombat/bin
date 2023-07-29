@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+#: Display bash history for all sessions.
+#: I keep a separate history file for each bash session.
+
+dump_history () {
+  pid=$(basename $1)
+  ( history -cr $1 ; HISTTIMEFORMAT="$pid %F %T " history )
+}
+
+for file in $(ls -rt $XDG_DATA_HOME/bash-history/*) ; do
+  dump_history $file | sed 's/ *[0-9]* *//'
+done

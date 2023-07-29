@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+#: Check various things for Haskell development.
+
+fix-copyright.sh | grep -v '^Editing '
+cabal check
+cabal outdated
+cabal --disable-nix gen-bounds
+
+SW_VERSION_IN_CHANGELOG=`sed -n 's/\([0-9\.]\+\) .*/\1/p' CHANGELOG.md | head -n 1`
+SW_VERSION_IN_CABAL=`sed -n 's/^version: *\(.*\)/\1/ip' *.cabal`
+
+if [ "${SW_VERSION_IN_CHANGELOG}" == "${SW_VERSION_IN_CABAL}" ] ; then
+  echo "Version number in CHANGLELOG matches that in cabal"
+else
+  echo "ERROR: version number in CHANGLELOG does not match that in cabal: ${SW_VERSION_IN_CHANGELOG} vs. ${SW_VERSION_IN_CABAL}"
+  exit 1
+fi

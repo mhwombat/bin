@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-
+#: Experiment with yambar. Not currently in use.
 # amy-status - BLAH BLAH BLAH at a configurable sample interval
 #
 # Usage: amy-status INTERVAL_IN_SECONDS

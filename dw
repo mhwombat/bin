@@ -13,7 +13,7 @@
 #: put additional files under dotfile management (add them to ${CONFIG_FILE} first),
 #: or simply verify that existing links are correct.
 
-DOTFILE_DIR=~/dotWombat
+DOTFILE_DIR=~/github/dotWombat
 CONFIG_FILE=${DOTFILE_DIR}/config
 
 function linkPath {

@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+#: Opens an FZF window containing all windows across all environments.
+#: Focuses the window (switching workpace if required) on selection.
 
 # Originally from https://github.com/ldelossa/sway-fzfify/blob/main/sway-tree-switcher
 # Modified by Amy de Buitléir.
@@ -48,7 +50,7 @@ for ((i=0; i<"${#windows[@]}"; i=i+3,lines++)); do
     name="${windows[i+2]}"
 
     building_string="$id:"
-    if [[ $app_id != "null" ]]; 
+    if [[ $app_id != "null" ]];
     then
         building_string="$building_string $app_id"
     fi
@@ -61,10 +63,10 @@ for ((i=0; i<"${#windows[@]}"; i=i+3,lines++)); do
         str_largest="$building_string"
         columns=${#building_string}
     fi
-    str="$str$building_string\n" 
+    str="$str$building_string\n"
 done
 
-# add some padding to the terminal for 
+# add some padding to the terminal for
 # lines and columns, for columns make sure
 # we take the prompt into the padding consideration
 lines=$((lines+3))

@@ -3,6 +3,7 @@
 
 configDir=$1
 
+echo "DEBUG configDir=$configDir"
 cd ${configDir}
 make keys.txt
 yad --filename=keys.txt --text-info

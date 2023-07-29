@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+#: `count-files [PATH]..` reports the number of files in each PATH, including
+#: any hidden files and subdirectories. 
+#: The directories themselves are also counted.
+#:
+#: Tip: Because of the way glob patterns work, `count-files *` will ignore any
+#: hidden files in the current directory. One workaround is 
+#: `count-files .??* *`
+
+for arg in "$@"
+do
+  echo -n "$arg: "
+  find "$arg" | wc -l
+done

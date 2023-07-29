@@ -1,7 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p csvkit yad
 #: Display my current key bindings
 
-cd /home/amy/dotWombat/.config/sway
+cd /home/amy/github/dotWombat/.config/sway
 make keys.txt
 yad --filename=keys.txt --text-info
 
