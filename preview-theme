@@ -1,6 +1,8 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash -p mustache-go
-#: Generate previews of all defined colour schemes for supported apps.
+#: Generate a preview of a colour scheme for supported apps.
+TEMPLATE_NAME=${1:-default}
+
 DOTDIR=~/github/dotWombat
 CONFIGDIR=${DOTDIR}/.config
 THEMEDIR=~/github/schemes/base16
@@ -10,9 +12,5 @@ PREVIEW_DIR=${DOTDIR}/themes/previews
 TEMPLATE_FILE=${DOTDIR}/themes/html.mustache
 
 mkdir -p ${PREVIEW_DIR}
-
-for file in $(ls ${THEMEDIR}/*.yaml); do
-    theme=$(basename -s .yaml $file)
-    mustache $file ${TEMPLATE_FILE} > ${PREVIEW_DIR}/${theme}.html
-done
+mustache ${THEMEFILE} ${TEMPLATE_FILE} > ${PREVIEW_DIR}/${TEMPLATE_NAME}.html
 

@@ -6,45 +6,31 @@ TEMPLATE_NAME=${1:-default}
 
 DOTDIR=~/github/dotWombat
 CONFIGDIR=${DOTDIR}/.config
-THEMEDIR=${DOTDIR}/themes
-
-# zsh
-ZSH_THEME_DIR=${CONFIGDIR}/zsh
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${ZSH_THEME_DIR}/configure-spaceship.mustache > ${ZSH_THEME_DIR}/configure-spaceship
+THEMEDIR=~/github/schemes/base16
+THEMEFILE=${THEMEDIR}/${TEMPLATE_NAME}.yaml
 
 # foot
 FOOT_THEME_DIR=${CONFIGDIR}/foot
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${FOOT_THEME_DIR}/foot.mustache > ${FOOT_THEME_DIR}/foot.ini
-
-# alacritty
-ALACRITTY_THEME_DIR=${CONFIGDIR}/alacritty
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${ALACRITTY_THEME_DIR}/alacritty.yml.mustache > ${ALACRITTY_THEME_DIR}/alacritty.yml
+mustache ${THEMEFILE} ${FOOT_THEME_DIR}/tinted.mustache > ${FOOT_THEME_DIR}/colours.ini
 
 # textadept
+echo MY TEXTADEPT THEMEING IS CURRENTLY IGNORED
 TEXTADEPT_THEME_DIR=${CONFIGDIR}/textadept/themes
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${TEXTADEPT_THEME_DIR}/base16-amy.lua.mustache > ${TEXTADEPT_THEME_DIR}/base16-amy.lua
+mustache ${THEMEFILE} ${TEXTADEPT_THEME_DIR}/tinted.lua.mustache > ${TEXTADEPT_THEME_DIR}/tinted.lua
 
 # waybar
 WAYBAR_THEME_DIR=${CONFIGDIR}/waybar
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
+mustache ${THEMEFILE} ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
 
 # sway
 SWAY_THEME_DIR=${CONFIGDIR}/sway
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR}/colours
-
-# river
-RIVER_THEME_DIR=${CONFIGDIR}/river
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${RIVER_THEME_DIR}/colours.mustache > ${RIVER_THEME_DIR}/colours
-
-# qtile
-QTILE_THEME_DIR=${CONFIGDIR}/qtile
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${QTILE_THEME_DIR}/colour.py.mustache > ${QTILE_THEME_DIR}/colour.py
+mustache ${THEMEFILE} ${SWAY_THEME_DIR}/tinted.mustache > ${SWAY_THEME_DIR}/colours
 
 # starship
 STARSHIP_THEME_DIR=${CONFIGDIR}/starship
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
+mustache ${THEMEFILE} ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
 
 # amys_launcher
 AMYS_LAUNCHER_THEME_DIR=~/github/bin
-mustache ${THEMEDIR}/${TEMPLATE_NAME}.json ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
+mustache ${THEMEFILE} ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
 chmod +x ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
