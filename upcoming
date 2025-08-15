@@ -38,6 +38,6 @@ DAY3=$(date -d '+2 days' '+%Y/%m/%d')
 DAY4=$(date -d '+3 days' '+%Y/%m/%d')
 DAY5=$(date -d '+4 days' '+%Y/%m/%d')
 echo "Coming soon" | underline
-grep -e "${DAY3}|${DAY4}|${DAY5}" ${TEMPFILE} | messageIfEmpty
+grep -Ee "${DAY3}|${DAY4}|${DAY5}" ${TEMPFILE} | messageIfEmpty
 
 rm ${TEMPFILE}
