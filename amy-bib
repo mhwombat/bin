@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bibclean
+#! nix-shell -i bash -p bibtex-tidy
 #: Read BibTeX information from paste buffer and put it into my citation management system.
 #: I keep each BibTeX in a separate file.
 #: The name of the file is the BibTeX key.
@@ -15,7 +15,9 @@ case ${XDG_SESSION_TYPE} in
         PASTE_COMMAND=xsel -o
 esac
 
-${PASTE_COMMAND} | sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' | bibclean > $file
+${PASTE_COMMAND} | \
+  sed 's/^\(@[^{]*{\).*/\1XXX_SEE_FILENAME_XXX,/' | \
+  bibtex-tidy --curly --strip-enclosing-braces --numeric --no-strip-comments --encode-urls --trailing-commas --no-wrap > $file
 cat $file
 
 read -p "Tag? " tag
