@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 #: Themed launcher
 
-# Scheme name: base16 / Atelier Seaside
-# Scheme author: Bram de Haan (http://atelierbramdehaan.nl)
+# Scheme name: base16 / Da One Black
+# Scheme author: NNB (https://github.com/NNBnh)
 
 bemenu-run --bottom --prompt '' \
-           --tb '#131513' \
-           --tf '#8ca68c' \
-           --nb '#131513' \
-           --nf '#8ca68c' \
-           --hb '#3d62f5' \
-           --hf '#131513' \
-           --ff '#98981b'
+           --tb '#000000' \
+           --tf '#FFFFFF' \
+           --nb '#000000' \
+           --nf '#FFFFFF' \
+           --hb '#6BB8FF' \
+           --hf '#000000' \
+           --ff '#FF9470'

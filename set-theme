@@ -9,28 +9,41 @@ CONFIGDIR=${DOTDIR}/.config
 THEMEDIR=~/github/schemes/base16
 THEMEFILE=${THEMEDIR}/${TEMPLATE_NAME}.yaml
 
+SAFE_THEMEFILE=$(mktemp)
+sed 's/: "#\([^"]*\)"/: "\U\1"/' ${THEMEFILE} > ${SAFE_THEMEFILE}
+# echo DEBUG ; sdiff ${THEMEFILE} ${SAFE_THEMEFILE}
+
 # foot
 FOOT_THEME_DIR=${CONFIGDIR}/foot
-mustache ${THEMEFILE} ${FOOT_THEME_DIR}/tinted.mustache > ${FOOT_THEME_DIR}/colours.ini
+mustache ${SAFE_THEMEFILE} ${FOOT_THEME_DIR}/colours.mustache > ${FOOT_THEME_DIR}/colours.ini
 
 # textadept
-echo MY TEXTADEPT THEMEING IS CURRENTLY IGNORED
 TEXTADEPT_THEME_DIR=${CONFIGDIR}/textadept/themes
-mustache ${THEMEFILE} ${TEXTADEPT_THEME_DIR}/tinted.lua.mustache > ${TEXTADEPT_THEME_DIR}/tinted.lua
+# Textadept wants the colours in BGR order, not RGB
+TEXTADEPT_THEMEFILE=$(mktemp)
+sed 's/#\(..\)\(..\)\(..\)/\3\2\1/' ${THEMEFILE} > ${TEXTADEPT_THEMEFILE}
+mustache ${TEXTADEPT_THEMEFILE} ${TEXTADEPT_THEME_DIR}/base16-amy.mustache > ${TEXTADEPT_THEME_DIR}/base16-amy.lua
+rm ${TEXTADEPT_THEMEFILE}
 
 # waybar
 WAYBAR_THEME_DIR=${CONFIGDIR}/waybar
-mustache ${THEMEFILE} ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
+mustache ${SAFE_THEMEFILE} ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
 
 # sway
 SWAY_THEME_DIR=${CONFIGDIR}/sway
-mustache ${THEMEFILE} ${SWAY_THEME_DIR}/tinted.mustache > ${SWAY_THEME_DIR}/colours
+mustache ${SAFE_THEMEFILE} ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR}/colours
+
+# niri
+NIRI_THEME_DIR=${CONFIGDIR}/niri
+mustache ${SAFE_THEMEFILE} ${NIRI_THEME_DIR}/config.kdl.mustache > ${NIRI_THEME_DIR}/config.kdl
 
 # starship
 STARSHIP_THEME_DIR=${CONFIGDIR}/starship
-mustache ${THEMEFILE} ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
+mustache ${SAFE_THEMEFILE} ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
 
 # amys_launcher
 AMYS_LAUNCHER_THEME_DIR=~/github/bin
-mustache ${THEMEFILE} ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
+mustache ${SAFE_THEMEFILE} ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
 chmod +x ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
+
+rm ${SAFE_THEMEFILE}
