@@ -7,7 +7,7 @@
 #:    and replace it with a symbolic link.
 #: 3. If the file exists and is a link, make sure it's linked to the corresponding file
 #:    in ${DOTFILE_DIR}.
-#: 
+#:
 #: This script is idempotent, so you can use it to
 #: set up links for the first time on a new machine,
 #: put additional files under dotfile management (add them to ${CONFIG_FILE} first),
@@ -60,7 +60,7 @@ function createLink {
     makeDirFor $1
     ln -s $2 $1
   else
-    echo "ERROR: $2 does not exist"
+    echo "ERROR: Neither $1 or $2 exist"
   fi
 }
 
@@ -79,21 +79,21 @@ function verifyLink {
 
 function setupLink {
   if [ -e "$1" ]; then
-    #echo "DEBUG $1 exists"
+    # echo "DEBUG $1 exists"
     if [ -h "$1" ]; then
-      #echo "DEBUG $1 is a link"
+      # echo "DEBUG $1 is a link"
       verifyLink $1 $2
     else
-      #echo "DEBUG $1 is not a link"
+      # echo "DEBUG $1 is not a link"
       if [ -e $2 ]; then
         echo "ERROR: $2 exists, but $1 is not a symbolic link"
       else
-        #echo "DEBUG $2 exists"
+        # echo "DEBUG $2 exists"
         moveAndLink $1 $2
       fi
     fi
   else
-    #echo "DEBUG $1 does not exist"
+    # echo "DEBUG $1 does not exist"
     createLink $1 $2
   fi
 }
