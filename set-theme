@@ -6,10 +6,18 @@ TEMPLATE_NAME=${1:-default}
 
 DOTDIR=~/github/dotWombat
 CONFIGDIR=${DOTDIR}/.config
-THEMEDIR=~/github/schemes/base16
+THEMEDIR=~/github/schemes/base24
 THEMEFILE=${THEMEDIR}/${TEMPLATE_NAME}.yaml
+# echo "DEBUG THEMEFILE=$THEMEFILE"
 
-SAFE_THEMEFILE=$(mktemp)
+if [ -e "$THEMEFILE" ] ; then
+  :
+else
+  echo "ERROR: Cannot find themefile $THEMEFILE"
+  exit
+fi
+
+SAFE_THEMEFILE=$(mktemp "set-theme_XXXXXX")
 sed 's/: "#\([^"]*\)"/: "\U\1"/' ${THEMEFILE} > ${SAFE_THEMEFILE}
 # echo DEBUG ; sdiff ${THEMEFILE} ${SAFE_THEMEFILE}
 
@@ -20,7 +28,7 @@ mustache ${SAFE_THEMEFILE} ${FOOT_THEME_DIR}/colours.mustache > ${FOOT_THEME_DIR
 # textadept
 TEXTADEPT_THEME_DIR=${CONFIGDIR}/textadept/themes
 # Textadept wants the colours in BGR order, not RGB
-TEXTADEPT_THEMEFILE=$(mktemp)
+TEXTADEPT_THEMEFILE=$(mktemp "set-theme_XXXXXX")
 sed 's/#\(..\)\(..\)\(..\)/\3\2\1/' ${THEMEFILE} > ${TEXTADEPT_THEMEFILE}
 mustache ${TEXTADEPT_THEMEFILE} ${TEXTADEPT_THEME_DIR}/base16-amy.mustache > ${TEXTADEPT_THEME_DIR}/base16-amy.lua
 rm ${TEXTADEPT_THEMEFILE}
@@ -36,6 +44,10 @@ mustache ${SAFE_THEMEFILE} ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR
 # niri
 NIRI_THEME_DIR=${CONFIGDIR}/niri
 mustache ${SAFE_THEMEFILE} ${NIRI_THEME_DIR}/config.kdl.mustache > ${NIRI_THEME_DIR}/config.kdl
+
+# fuzzel
+FUZZEL_THEME_DIR=${CONFIGDIR}/fuzzel
+mustache ${SAFE_THEMEFILE} ${FUZZEL_THEME_DIR}/colours.ini.mustache > ${FUZZEL_THEME_DIR}/colours.ini
 
 # starship
 STARSHIP_THEME_DIR=${CONFIGDIR}/starship
