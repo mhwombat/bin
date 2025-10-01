@@ -1,61 +1,93 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p mustache-go
+#! nix-shell -i bash -p mustache-go yamllint
 #: Change colour scheme for supported apps.
 
-TEMPLATE_NAME=${1:-default}
-
+BASE24_PALETTE_NAME=${1:-default}        # name of the selected base24 palette
 DOTDIR=~/github/dotWombat
-CONFIGDIR=${DOTDIR}/.config
-THEMEDIR=~/github/schemes/base24
-THEMEFILE=${THEMEDIR}/${TEMPLATE_NAME}.yaml
-# echo "DEBUG THEMEFILE=$THEMEFILE"
+THEME_DIR=${DOTDIR}/themes
+CONFIG_DIR=${DOTDIR}/.config2
+HUES_FILE=${THEME_DIR}/hues.yaml         # maps base24 colors to "hues"
+ORDER_FILE=${THEME_DIR}/hue-order.yaml   # lists preferred hues, in order of preference
+ROLES_FILE=${THEME_DIR}/roles.yaml       # assigns hues to roles
+BASE24_DIR=~/github/schemes/base24
+BASE24_FILE=${BASE24_DIR}/${BASE24_PALETTE_NAME}.yaml
 
-if [ -e "$THEMEFILE" ] ; then
+function rgb-to-bgr {
+  sed 's/#\(..\)\(..\)\(..\)/\3\2\1/'
+}
+
+function normalise-rgb {
+  sed 's/: "#\([^"]*\)"/: "\U\1"/'
+}
+
+#
+# Ensure that the base24 palette is available
+#
+# echo "DEBUG BASE24_FILE=$BASE24_FILE"
+if [ -e "$BASE24_FILE" ] ; then
   :
 else
-  echo "ERROR: Cannot find themefile $THEMEFILE"
+  echo "ERROR: Cannot find theme file $BASE24_FILE"
   exit
 fi
 
-SAFE_THEMEFILE=$(mktemp "set-theme_XXXXXX")
-sed 's/: "#\([^"]*\)"/: "\U\1"/' ${THEMEFILE} > ${SAFE_THEMEFILE}
-# echo DEBUG ; sdiff ${THEMEFILE} ${SAFE_THEMEFILE}
+#
+# Assemble all of the configuration settings and format them as needed for the apps
+#
+RGB_FILE=$(mktemp "set-theme_XXXXXX")
+sed 's/: "#\([^"]*\)"/: "\U\1"/' ${BASE24_FILE} > ${RGB_FILE}
 
-# foot
-FOOT_THEME_DIR=${CONFIGDIR}/foot
-mustache ${SAFE_THEMEFILE} ${FOOT_THEME_DIR}/colours.mustache > ${FOOT_THEME_DIR}/colours.ini
+BGR_FILE=$(mktemp "set-theme_XXXXXX")
+sed 's/#\(..\)\(..\)\(..\)/\3\2\1/' ${BASE24_FILE} > ${BGR_FILE}
 
-# textadept
-TEXTADEPT_THEME_DIR=${CONFIGDIR}/textadept/themes
-# Textadept wants the colours in BGR order, not RGB
-TEXTADEPT_THEMEFILE=$(mktemp "set-theme_XXXXXX")
-sed 's/#\(..\)\(..\)\(..\)/\3\2\1/' ${THEMEFILE} > ${TEXTADEPT_THEMEFILE}
-mustache ${TEXTADEPT_THEMEFILE} ${TEXTADEPT_THEME_DIR}/base16-amy.mustache > ${TEXTADEPT_THEME_DIR}/base16-amy.lua
-rm ${TEXTADEPT_THEMEFILE}
+RGB_CONFIG_FILE=$(mktemp "set-theme_XXXXXX")
+cat ${RGB_FILE} ${HUES_FILE} ${ORDER_FILE} ${ROLES_FILE} | recurse-yaml > ${RGB_CONFIG_FILE}
 
-# waybar
-WAYBAR_THEME_DIR=${CONFIGDIR}/waybar
-mustache ${SAFE_THEMEFILE} ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
+BGR_CONFIG_FILE=$(mktemp "set-theme_XXXXXX")
+cat ${BGR_FILE} ${HUES_FILE} ${ORDER_FILE} ${ROLES_FILE} | recurse-yaml > ${BGR_CONFIG_FILE}
 
-# sway
-SWAY_THEME_DIR=${CONFIGDIR}/sway
-mustache ${SAFE_THEMEFILE} ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR}/colours
+#
+# Configure foot
+#
+FOOT_THEME_DIR=${CONFIG_DIR}/foot
+mustache ${RGB_CONFIG_FILE} ${FOOT_THEME_DIR}/colours.mustache > ${FOOT_THEME_DIR}/colours.ini
 
-# niri
-NIRI_THEME_DIR=${CONFIGDIR}/niri
-mustache ${SAFE_THEMEFILE} ${NIRI_THEME_DIR}/config.kdl.mustache > ${NIRI_THEME_DIR}/config.kdl
+#
+# Configure starship
+#
+STARSHIP_THEME_DIR=${CONFIG_DIR}/starship
+mustache ${RGB_CONFIG_FILE} ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
 
-# fuzzel
-FUZZEL_THEME_DIR=${CONFIGDIR}/fuzzel
-mustache ${SAFE_THEMEFILE} ${FUZZEL_THEME_DIR}/colours.ini.mustache > ${FUZZEL_THEME_DIR}/colours.ini
+#
+# Configure textadept
+TEXTADEPT_THEME_DIR=${CONFIG_DIR}/textadept/themes
+mustache ${BGR_CONFIG_FILE} ${TEXTADEPT_THEME_DIR}/base16-amy.mustache > ${TEXTADEPT_THEME_DIR}/base16-amy.lua
 
-# starship
-STARSHIP_THEME_DIR=${CONFIGDIR}/starship
-mustache ${SAFE_THEMEFILE} ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
+#
+# Configure niri
+#
+NIRI_THEME_DIR=${CONFIG_DIR}/niri
+mustache ${RGB_CONFIG_FILE} ${NIRI_THEME_DIR}/config.kdl.mustache > ${NIRI_THEME_DIR}/config.kdl
 
-# amys_launcher
-AMYS_LAUNCHER_THEME_DIR=~/github/bin
-mustache ${SAFE_THEMEFILE} ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher.mustache > ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
-chmod +x ${AMYS_LAUNCHER_THEME_DIR}/amys-launcher
+#
+# Configure waybar
+#
+WAYBAR_THEME_DIR=${CONFIG_DIR}/waybar
+mustache ${RGB_CONFIG_FILE} ${WAYBAR_THEME_DIR}/style.css.mustache > ${WAYBAR_THEME_DIR}/style.css
 
-rm ${SAFE_THEMEFILE}
+#
+# Configure fuzzel
+#
+FUZZEL_THEME_DIR=${CONFIG_DIR}/fuzzel
+mustache ${RGB_CONFIG_FILE} ${FUZZEL_THEME_DIR}/colours.ini.mustache > ${FUZZEL_THEME_DIR}/colours.ini
+
+# #
+# # Configure sway
+# #
+# SWAY_THEME_DIR=${CONFIG_DIR}/sway
+# mustache ${RGB_CONFIG_FILE} ${SWAY_THEME_DIR}/colours.mustache > ${SWAY_THEME_DIR}/colours
+
+#
+# Clean up
+#
+rm ${RGB_FILE} ${BGR_FILE} ${RGB_CONFIG_FILE} ${BGR_CONFIG_FILE}

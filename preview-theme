@@ -1,16 +1,15 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash -p mustache-go
 #: Generate a preview of a colour scheme for supported apps.
-TEMPLATE_NAME=${1:-default}
-
+BASE24_PALETTE_NAME=${1:-default}        # name of the selected base24 palette
 DOTDIR=~/github/dotWombat
-CONFIGDIR=${DOTDIR}/.config
-THEMEDIR=~/github/schemes/base16
-THEMEFILE=${THEMEDIR}/${TEMPLATE_NAME}.yaml
-
 PREVIEW_DIR=${DOTDIR}/themes/previews
 TEMPLATE_FILE=${DOTDIR}/themes/html.mustache
 
+THEME_FILE=$(mktemp "set-theme_XXXXXX")
+compile-theme ${BASE24_PALETTE_NAME} > ${THEME_FILE}
+
 mkdir -p ${PREVIEW_DIR}
-mustache ${THEMEFILE} ${TEMPLATE_FILE} > ${PREVIEW_DIR}/${TEMPLATE_NAME}.html
+mustache ${THEME_FILE} ${TEMPLATE_FILE} > ${PREVIEW_DIR}/${BASE24_PALETTE_NAME}.html
+rm ${THEME_FILE}
 

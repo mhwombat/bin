@@ -2,17 +2,17 @@
 #! nix-shell -i bash -p mustache-go
 #: Generate previews of all defined colour schemes for supported apps.
 DOTDIR=~/github/dotWombat
-CONFIGDIR=${DOTDIR}/.config
-THEMEDIR=~/github/schemes/base16
-THEMEFILE=${THEMEDIR}/${TEMPLATE_NAME}.yaml
-
 PREVIEW_DIR=${DOTDIR}/themes/previews
 TEMPLATE_FILE=${DOTDIR}/themes/html.mustache
+THEME_DIR=~/github/schemes/base16
 
 mkdir -p ${PREVIEW_DIR}
 
-for file in $(ls ${THEMEDIR}/*.yaml); do
-    theme=$(basename -s .yaml $file)
-    mustache $file ${TEMPLATE_FILE} > ${PREVIEW_DIR}/${theme}.html
+for file in $(ls ${THEME_DIR}/*.yaml); do
+    BASE24_PALETTE_NAME=$(basename -s .yaml $file)
+    echo "Generating ${BASE24_PALETTE_NAME} preview"
+    THEME_FILE=$(mktemp "set-theme_XXXXXX")
+    compile-theme ${BASE24_PALETTE_NAME} > ${THEME_FILE}
+    mustache ${THEME_FILE} ${TEMPLATE_FILE} > ${PREVIEW_DIR}/${BASE24_PALETTE_NAME}.html
+    rm ${THEME_FILE}
 done
-
