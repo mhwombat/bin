@@ -1,0 +1,53 @@
+#! /usr/bin/env bash
+#: Compile colour scheme for supported apps.
+
+BASE24_PALETTE_NAME=${1:-default}        # name of the selected base24 palette
+FORMAT=${2:-RGB}                         # Format for colours: RGB or BGR
+
+DOTDIR=~/github/dotWombat
+THEME_DIR=${DOTDIR}/themes
+CONFIG_DIR=${DOTDIR}/.config2
+HUES_FILE=${THEME_DIR}/hues.yaml         # maps base24 colors to "hues"
+ORDER_FILE=${THEME_DIR}/hue-order.yaml   # lists preferred hues, in order of preference
+ROLES_FILE=${THEME_DIR}/roles.yaml       # assigns hues to roles
+BASE24_DIR=~/github/schemes/base24
+BASE24_FILE=${BASE24_DIR}/${BASE24_PALETTE_NAME}.yaml
+
+function rgb-to-bgr {
+  sed 's/#\(..\)\(..\)\(..\)/\3\2\1/'
+}
+
+function normalise-rgb {
+  sed 's/: "#\([^"]*\)"/: "\U\1"/'
+}
+
+#
+# Ensure that the base24 palette is available
+#
+# echo "DEBUG BASE24_FILE=$BASE24_FILE"
+if [ -e "$BASE24_FILE" ] ; then
+  :
+else
+  echo "ERROR: Cannot find theme file $BASE24_FILE"
+  exit
+fi
+
+#
+# Assemble all of the configuration settings and format them as needed for the apps
+#
+PALETTE_FILE=$(mktemp "set-theme_XXXXXX")
+
+if [ "${FORMAT}" == "RGB" ]; then
+  sed 's/: "#\([^"]*\)"/: "\U\1"/' ${BASE24_FILE} > ${PALETTE_FILE}
+elif [ "${FORMAT}" == "BGR" ]; then
+  sed 's/#\(..\)\(..\)\(..\)/\U\3\U\2\U\1/' ${BASE24_FILE} > ${PALETTE_FILE}
+else
+  print "ERROR: Invalid color format. Only RGB and BGR are supported"
+fi
+
+cat ${PALETTE_FILE} ${HUES_FILE} ${ORDER_FILE} ${ROLES_FILE} | recurse-yaml
+
+#
+# Clean up
+#
+rm ${PALETTE_FILE}

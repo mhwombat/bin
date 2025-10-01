@@ -1,0 +1,11 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p "python3.withPackages(ps: [ ps.omegaconf ])"
+#: Run the OmegaConf to recursively evaluate references in a YAML file.
+#: Reads the YAML input from standard input and writes to standard output.
+
+from omegaconf import OmegaConf
+import sys
+
+conf = OmegaConf.load(sys.stdin)
+OmegaConf.resolve(conf)
+print(OmegaConf.to_yaml(conf))
