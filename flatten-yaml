@@ -1,0 +1,5 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p yq-go
+#: Reads YAML from stdin and writes the flattened form
+#: (i.e., in .properties format) of it to stdout.
+yq -o=props

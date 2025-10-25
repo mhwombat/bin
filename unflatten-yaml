@@ -1,0 +1,39 @@
+#!/usr/bin/env -S gawk -f
+#: Reads a flattened YAML file (aka a .properties file) from stdin
+#: and writes the expanded form of it to stdout.
+BEGIN {
+  FS = ":"
+  previousCount = 0
+}
+
+{
+  key = $1
+  value = $2
+
+  if (NF < 2) {
+    # this is a blank or comment line
+    print key
+  } else {
+    # it's a key-value pair
+    split(key, keys, ".")
+    numKeys = length(keys)
+    indent = ""
+
+    # process all keys except the final one
+    for (i = 1; i < numKeys; i++) {
+      if (keys[i] != prevKeys[i])
+        print indent keys[i] ":"
+      indent = indent "  "
+    }
+
+    # process the final key and value
+    print indent keys[i] ":" value
+  }
+
+  delete prevKeys
+  for (i in keys)
+    prevKeys[i] = keys[i]
+}
+
+END {
+}
