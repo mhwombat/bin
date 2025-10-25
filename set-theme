@@ -5,7 +5,7 @@
 BASE24_PALETTE_NAME=${1:-default}        # name of the selected base24 palette
 DOTDIR=~/github/dotWombat
 THEME_DIR=${DOTDIR}/themes
-CONFIG_DIR=${DOTDIR}/.config2
+CONFIG_DIR=${DOTDIR}/.config
 HUES_FILE=${THEME_DIR}/hues.yaml         # maps base24 colors to "hues"
 ORDER_FILE=${THEME_DIR}/hue-order.yaml   # lists preferred hues, in order of preference
 ROLES_FILE=${THEME_DIR}/roles.yaml       # assigns hues to roles
@@ -18,6 +18,20 @@ function rgb-to-bgr {
 
 function normalise-rgb {
   sed 's/: "#\([^"]*\)"/: "\U\1"/'
+}
+
+function run-mustache {
+  temp_file=$(mktemp "set-theme_XXXXXX.rm")
+  mustache  --allow-missing-variables=false $1 $2 > ${temp_file}
+  result=$?
+  if [ $result -gt 0 ] ; then
+    echo "ERROR processing $1 with template $2" >&2
+    cat ${temp_file} >&2
+    exit
+  else
+    cat ${temp_file}
+    rm ${temp_file}
+  fi
 }
 
 #
@@ -34,40 +48,48 @@ fi
 #
 # Assemble all of the configuration settings and format them as needed for the apps
 #
-RGB_FILE=$(mktemp "set-theme_XXXXXX")
+RGB_FILE=$(mktemp "set-theme_XXXXXX.rgb")
 sed 's/: "#\([^"]*\)"/: "\U\1"/' ${BASE24_FILE} > ${RGB_FILE}
 
-BGR_FILE=$(mktemp "set-theme_XXXXXX")
+BGR_FILE=$(mktemp "set-theme_XXXXXX.bgr")
 sed 's/#\(..\)\(..\)\(..\)/\3\2\1/' ${BASE24_FILE} > ${BGR_FILE}
 
-RGB_CONFIG_FILE=$(mktemp "set-theme_XXXXXX")
+RGB_CONFIG_FILE=$(mktemp "set-theme_XXXXXX.rgb.config")
 cat ${RGB_FILE} ${HUES_FILE} ${ORDER_FILE} ${ROLES_FILE} | recurse-yaml > ${RGB_CONFIG_FILE}
+result=$?
+if [ $result -gt 0 ] ; then
+  echo "ERROR while expanding YAML $result"
+fi
 
-BGR_CONFIG_FILE=$(mktemp "set-theme_XXXXXX")
+BGR_CONFIG_FILE=$(mktemp "set-theme_XXXXXX.bgr.config")
 cat ${BGR_FILE} ${HUES_FILE} ${ORDER_FILE} ${ROLES_FILE} | recurse-yaml > ${BGR_CONFIG_FILE}
+result=$?
+if [ $result -gt 0 ] ; then
+  echo "ERROR while expanding YAML $result"
+fi
 
 #
 # Configure foot
 #
 FOOT_THEME_DIR=${CONFIG_DIR}/foot
-mustache ${RGB_CONFIG_FILE} ${FOOT_THEME_DIR}/colours.mustache > ${FOOT_THEME_DIR}/colours.ini
+run-mustache ${RGB_CONFIG_FILE} ${FOOT_THEME_DIR}/colours.mustache > ${FOOT_THEME_DIR}/colours.ini
 
 #
 # Configure starship
 #
 STARSHIP_THEME_DIR=${CONFIG_DIR}/starship
-mustache ${RGB_CONFIG_FILE} ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
+run-mustache ${RGB_CONFIG_FILE} ${STARSHIP_THEME_DIR}/starship.toml.mustache > ${STARSHIP_THEME_DIR}/starship.toml
 
 #
 # Configure textadept
 TEXTADEPT_THEME_DIR=${CONFIG_DIR}/textadept/themes
-mustache ${BGR_CONFIG_FILE} ${TEXTADEPT_THEME_DIR}/base16-amy.mustache > ${TEXTADEPT_THEME_DIR}/base16-amy.lua
+run-mustache ${BGR_CONFIG_FILE} ${TEXTADEPT_THEME_DIR}/base24.mustache > ${TEXTADEPT_THEME_DIR}/base24.lua
 
 #
 # Configure niri
 #
 NIRI_THEME_DIR=${CONFIG_DIR}/niri
-mustache ${RGB_CONFIG_FILE} ${NIRI_THEME_DIR}/config.kdl.mustache > ${NIRI_THEME_DIR}/config.kdl
+mustache ${RGB_CONFIG_FILE} ${NIRI_THEME_DIR}/colour.kdl.mustache > ${NIRI_THEME_DIR}/colour.kdl
 
 #
 # Configure waybar
