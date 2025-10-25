@@ -37,29 +37,27 @@ def colourInfo(h, l, s):
     return { "hls": (h, l, s), "rgbHex": hls2rgbhex(h, l, s), "hlsStr": prettyHLS(h, l, s),
               "hIndex": (h + 15) % 1}
 
-def generateTextColours(h, n):
-    '''Generate n new colours based on the input hue, designed for foregrounds and backgrounds.
-    The generated colours will all have the given hue, but will be less saturated,
-    and the luminosities will be evenly distributed around the colour wheel.'''
-    delta=1/(n-1) # include endpoint
-    s = 0.05
-    return [(h,i*delta,s) for i in range(n)]
+def generateTextColours(h, s, l1, l2, n):
+    '''Generate n new colours designed for foregrounds and backgrounds.
+    The generated colours will all have hue h and saturation s.
+    The colours will have lightnesses from lMin to lMax.'''
+    delta=(l2 - l1)/(n-1) # include endpoint
+    return [(h,l1 + i*delta,s) for i in range(n)]
 
-def complement(h):
-    '''Return the complementary hue for the input hue.'''
-    return ((h + 0.5) % 1)
+# def complement(h):
+#     '''Return the complementary hue for the input hue.'''
+#     return ((h + 0.5) % 1)
 
-def generateAccentColours(h, l, s, n):
-   '''Generate a list of n colours to use as accents.
-   The colours within each half of the list are maximally visually distinct from each other.
-   The first element will be the input colour.
-   Normally you would use colours from the first half, falling back on the second half
-   only when more colours are needed.'''
-   cs = varyHues(h, l, s, n)
-   # Put every other colour in a different set.
-   cs1 = [ cs[i] for i in range(0,n, 2)]
-   cs2 = [ cs[i] for i in range(1,n, 2)]
-   return cs1 + cs2
+def categoryOrder(cs):
+    '''Reorder colours in preparation for assigning them to categories.
+    The colours are arranged in an order designed to ensure that no matter how many categories
+    you need, the selected colours will be visually distinct.'''
+    n = len(cs)
+    cs1 = [ cs[i] for i in range(0, n, 4)]
+    cs2 = [ cs[i] for i in range(1, n, 4)]
+    cs3 = [ cs[i] for i in range(2, n, 4)]
+    cs4 = [ cs[i] for i in range(3, n, 4)]
+    return cs1 + cs2 + cs3 + cs4
 
 def varyHues(h, l, s, n):
     '''Generate n colours, including the input colour.
@@ -84,7 +82,7 @@ def colourTest(rgbHex):
     print ("RGB", rgbHex, prettyHLS(h, l, s))
 
 numTextColours = 10
-numAccentColours = 12 # should be a multiple of two
+numAccentColours = 12 # ideally a multiple of three
 
 mainColour = sys.argv[1]
 # print("DEBUG mainColour=", mainColour)
@@ -98,7 +96,8 @@ print("author: Amy de Buitléir")
 h, l, s = colorsys.rgb_to_hls(r/255, g/255, b/255)
 # print (f"DEBUG original hls is ({h}, {l}, {s})")
 
-textColoursHLS = generateTextColours(complement(h), numTextColours)
+#textColoursHLS = generateTextColours(complement(h), numTextColours)
+textColoursHLS = generateTextColours(h, 0.1, 0.1, 1.0, numTextColours)
 textColours = [ colourInfo(h, l, s) for (h, l, s) in textColoursHLS ]
 # print("DEBUG: textHLS=", textHLS)
 
@@ -108,9 +107,28 @@ printYAML(textKeys, textColours)
 printYAMLEntry("hue.black", textColours[0])  # used for by terminal for "black"
 printYAMLEntry("hue.white", textColours[-1]) # used for by terminal for "white"
 
-accentColoursHLS = generateAccentColours(h, l, s, numAccentColours)
+accentColoursHLS = varyHues(h, l, s, numAccentColours)
 accentColours = [ colourInfo(h, l, s) for (h, l, s) in accentColoursHLS ]
+accentColours[0]["rgbHex"] = mainColour # may have been altered by rounding
 # print("DEBUG accentColours=", accentColours)
+
+accentArrayKeys = [ "accent." + str(i) for i in range(numAccentColours) ]
+printYAML(accentArrayKeys, accentColours)
+
+print("# Mustache templates don't support array indexing, only iteration.")
+print("# These values are the same as in the array, but named so that we can access them individually.")
+accentKeys = [ "accent_" + str(i).zfill(2) for i in range(numAccentColours) ]
+printYAML(accentKeys, accentColours)
+
+categoryColours = categoryOrder(accentColours)
+
+categoryArrayKeys = [ "category." + str(i) for i in range(numAccentColours) ]
+printYAML(categoryArrayKeys, categoryColours)
+
+print("# Mustache templates don't support array indexing, only iteration.")
+print("# These values are the same as in the array, but named so that we can access them individually.")
+categoryKeys = [ "category_" + str(i).zfill(2) for i in range(numAccentColours) ]
+printYAML(categoryKeys, categoryColours)
 
 accentColourshIndexOrder = sorted(accentColours, key=lambda d: d["hIndex"])
 # print("DEBUG accentColourshIndexOrder=", accentColourshIndexOrder)
@@ -132,5 +150,3 @@ terminalColourKeys = [
 
 printYAML(terminalColourKeys, accentColourshIndexOrder)
 
-preferenceKeys = [ "preference." + str(i) for i in range(numAccentColours) ]
-printYAML(preferenceKeys, accentColours)
