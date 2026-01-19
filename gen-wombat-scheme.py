@@ -3,10 +3,9 @@
 #: Generate a colour scheme using the "wombat-themer" architecture
 #: (see http://www.chriskempson.com/projects/base16/).
 #:
-#: Examples:
+#: Example:
 #:
-#:     gen-wombat-scheme.py ff00ff
-#:     gen-base16-scheme.py D3E067
+#:     gen-wombat-scheme.py 0000ff pure-blue
 #:
 #: Note that the colour you supply may be slightly adjusted by rounding.
 
